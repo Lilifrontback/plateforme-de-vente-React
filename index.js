@@ -1,11 +1,23 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const session = require('express-session');
+const app = express();
+const port = 3000;
+
+app.use(
+  session({
+    secret: 'abcd',
+  })
+);
+
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  req.session.data = `qdzdqzdqzd
+  ddqzdsdds dazdqdzqdqzdqz qdsdsqds qdsdsqd`;
+  req.session.views = (req.session.views || 0) + 1;
+  res.json(req.session);
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
