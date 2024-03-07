@@ -7,16 +7,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Home from './Home.jsx'
 import Product from './Product.jsx'
+import NavBar from './composants/NavBar';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
       <Router>
+      <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           {/* Path = '/' -> page par défaut */}
           <Route path="/product/:id" element={<Product />} />
           {/* Path = '/"exemple"' -> permet d'accder à la page correspondante voir <Link> page Home */}
+          <Route path="/connexion" element={<Connexion />} />
         </Routes>
       </Router>
     </ChakraProvider>
