@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Home.css'; 
 import { Card, CardBody, CardFooter } from '@chakra-ui/react'
 import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
-import { Divider, ButtonGroup } from '@chakra-ui/react';
+import { Divider } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
 
 // Exemple d'ajout d'articles en dur:
@@ -64,7 +64,7 @@ function HomePage() {
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Living room Sofa</Heading>
+      <Heading size='md'><a>Living room Sofa</a></Heading>
       <Text>
         This sofa is perfect for modern tropical spaces, baroque inspired
         spaces, earthy toned spaces and for people who love a chic design with a
@@ -90,7 +90,7 @@ function HomePage() {
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Living room Sofa</Heading>
+      <Heading size='md'><a>Living room Sofa</a></Heading>
       <Text>
         This sofa is perfect for modern tropical spaces, baroque inspired
         spaces, earthy toned spaces and for people who love a chic design with a
@@ -116,7 +116,7 @@ function HomePage() {
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Living room Sofa</Heading>
+      <Heading size='md'><a>Living room Sofa</a></Heading>
       <Text>
         This sofa is perfect for modern tropical spaces, baroque inspired
         spaces, earthy toned spaces and for people who love a chic design with a
@@ -142,7 +142,7 @@ function HomePage() {
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Living room Sofa</Heading>
+      <Heading size='md'><a>Living room Sofa</a></Heading>
       <Text>
         This sofa is perfect for modern tropical spaces, baroque inspired
         spaces, earthy toned spaces and for people who love a chic design with a
@@ -168,7 +168,7 @@ function HomePage() {
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Living room Sofa</Heading>
+      <Heading size='md'><a>Living room Sofa</a></Heading>
       <Text>
         This sofa is perfect for modern tropical spaces, baroque inspired
         spaces, earthy toned spaces and for people who love a chic design with a
@@ -194,7 +194,7 @@ function HomePage() {
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Living room Sofa</Heading>
+      <Heading size='md'><a>Living room Sofa</a></Heading>
       <Text>
         This sofa is perfect for modern tropical spaces, baroque inspired
         spaces, earthy toned spaces and for people who love a chic design with a
