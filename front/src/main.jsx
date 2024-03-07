@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Home from './Home.jsx'
 import Product from './Product.jsx'
+import Footer from '../src/composants/Footer.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           {/* Path = '/"exemple"' -> permet d'accder à la page correspondante voir <Link> page Home */}
         </Routes>
       </Router>
+      <Footer />
     </ChakraProvider>
   </React.StrictMode>
 )

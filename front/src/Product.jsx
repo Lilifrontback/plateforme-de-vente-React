@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { SimpleGrid, Grid, Container } from '@chakra-ui/react';
+import { Grid, Container } from '@chakra-ui/react';
 import PhotoCard from './composants/PhotoCard.jsx';
 import DescriptionCard from './composants/DescriptionCard.jsx';
 import TechnicalSheetCard from './composants/TechnicalSheetCard.jsx';

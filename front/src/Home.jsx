@@ -56,9 +56,9 @@ const meuble = [
  */
 function Home() {
     return (
-      <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)'>
+      <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)' justifyItems='center' alignItems='center'>
         {meuble.map(meuble => (
-          <Card key={meuble.id} maxW='sm'>
+          <Card key={meuble.id} maxW='xs'>
             <CardBody>
               <Image src={meuble.image} alt={meuble.nom} borderRadius='lg' />
               <Stack mt='6' spacing='3'>
