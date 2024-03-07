@@ -4,7 +4,8 @@ import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
 import { Divider } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
 
-// Exemple d'ajout d'articles en dur:
+// Exemple pour rendre la page dynamique.
+//@todo: A remplacer par un appel API pour récupérer les articles.
 
 const meuble = [
   {
@@ -48,9 +49,9 @@ const meuble = [
 
 
 /**
- * Fonction de création de 6 Cards avec Chakra.UI (en dur).
- * TO DO: faire une boucle pour afficher chaque article en base de données, ne faire qu'une Card au lieu de 6.
- * @returns 6 Cards (photo, titre, prix, petite description et bouton "ajouter au panier")
+ * Rendu de la page d'accueil - cartes appelées dynamiquement avec la fonction map.
+ * @todo: limiter le nombre de carte affichées.
+ * @returns 6 Cards (photo, titre, prix, petite description et bouton "ajouter au panier") -- puisque 6 objets dans la constante-exemple 'meuble'.
  */
 function HomePage() {
     return (
