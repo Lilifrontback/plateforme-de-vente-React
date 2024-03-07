@@ -9,6 +9,7 @@ import Home from './Home.jsx'
 import Product from './Product.jsx'
 import NavBar from './composants/NavBar';
 import Connexion from './composants/Connexion.jsx'
+import Footer from '../src/composants/Footer.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/connexion" element={<Connexion />} />
         </Routes>
       </Router>
+      <Footer />
     </ChakraProvider>
   </React.StrictMode>
 )

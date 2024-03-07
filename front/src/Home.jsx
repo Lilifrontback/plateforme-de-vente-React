@@ -47,12 +47,13 @@ const meuble = [
 function Home() {
     return (
       <Stack spacing={8} align="center" mt={8}>
-        <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)'>
+        <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)' justifyItems='center'>
           {meuble.map(meuble => (
-            <Card key={meuble.id} maxW='sm'>
+            <Card key={meuble.id} maxW='xs'>
               <CardBody>
                 <Image src={meuble.image} alt={meuble.nom} borderRadius='lg' />
                 <Stack mt='6' spacing='3'>
+                  {/* Inclure l'ID de l'article dans l'URL */}
                   <Link to={`/product/${meuble.id}`}>
                     <Heading size='md'>{meuble.nom}</Heading>
                   </Link>
