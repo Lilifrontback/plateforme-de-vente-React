@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './Home.css'; 
 import { Card, CardBody, CardFooter } from '@chakra-ui/react'
 import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
 import { Divider } from '@chakra-ui/react';
@@ -7,7 +6,7 @@ import { SimpleGrid } from '@chakra-ui/react';
 
 // Exemple d'ajout d'articles en dur:
 
-/* const meuble = [
+const meuble = [
   {
       id: 1,
       nom: "Canapé",
@@ -45,7 +44,7 @@ import { SimpleGrid } from '@chakra-ui/react';
       image: "../src/assets/images/chaises.jpg",
   },
 
-]; */
+];
 
 
 /**
@@ -54,78 +53,25 @@ import { SimpleGrid } from '@chakra-ui/react';
  * @returns 6 Cards (photo, titre, prix, petite description et bouton "ajouter au panier")
  */
 function HomePage() {
-  return (
-      <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)' display='flex' flexWrap='wrap'>
-        <Card maxW='sm'>
-        <CardBody>
-          <Image
-            src='../src/assets/images/canape_gris.jpg'
-            alt='Canapé gris'
-            borderRadius='lg'
-          />
-          <Stack mt='6' spacing='3'>
-            <Heading size='md'><a>Living room Sofa</a></Heading>
-            <Text>
-              This sofa is perfect for modern tropical spaces, baroque inspired
-              spaces, earthy toned spaces and for people who love a chic design with a
-              sprinkle of vintage design.
-            </Text>
-            <Text color='blue.600' fontSize='2xl' ml='auto'>
-              $450
-            </Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter justifyContent='right'>
-          <Button variant='solid' colorScheme='blue'>
-            Ajouter au panier
-          </Button>
-        </CardFooter>
-        </Card>
-
-        <Card maxW='sm'>
+    return (
+        <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)' display='flex' flexWrap='wrap'>
+          {meuble.map(meuble => (
+          <Card key={meuble.id} maxW='sm'>
           <CardBody>
             <Image
-              src='../src/assets/images/armoire.jpg'
-              alt='Armoire'
+              src={meuble.image}
+              alt={meuble.nom}
               borderRadius='lg'
             />
             <Stack mt='6' spacing='3'>
-              <Heading size='md'><a>Living room Sofa</a></Heading>
+              <Heading size='md'>{meuble.nom}</Heading>
               <Text>
                 This sofa is perfect for modern tropical spaces, baroque inspired
                 spaces, earthy toned spaces and for people who love a chic design with a
                 sprinkle of vintage design.
               </Text>
               <Text color='blue.600' fontSize='2xl' ml='auto'>
-                $450
-              </Text>
-           </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter justifyContent='right'>
-            <Button variant='solid' colorScheme='blue'>
-              Ajouter au panier
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card maxW='sm'>
-          <CardBody>
-            <Image
-              src='../src/assets/images/commode.jpg'
-              alt='Commode'
-              borderRadius='lg'
-            />
-            <Stack mt='6' spacing='3'>
-              <Heading size='md'><a>Living room Sofa</a></Heading>
-              <Text>
-                This sofa is perfect for modern tropical spaces, baroque inspired
-                spaces, earthy toned spaces and for people who love a chic design with a
-                sprinkle of vintage design.
-              </Text>
-              <Text color='blue.600' fontSize='2xl' ml='auto'>
-                $450
+                {meuble.prix}€
               </Text>
             </Stack>
           </CardBody>
@@ -135,91 +81,10 @@ function HomePage() {
               Ajouter au panier
             </Button>
           </CardFooter>
-        </Card>
-
-        <Card maxW='sm'>
-          <CardBody>
-            <Image
-              src='../src/assets/images/biblio.jpg'
-              alt='Bibliothèque'
-              borderRadius='lg'
-            />
-            <Stack mt='6' spacing='3'>
-              <Heading size='md'><a>Living room Sofa</a></Heading>
-              <Text>
-                This sofa is perfect for modern tropical spaces, baroque inspired
-                spaces, earthy toned spaces and for people who love a chic design with a
-                sprinkle of vintage design.
-              </Text>
-              <Text color='blue.600' fontSize='2xl' ml='auto'>
-                $450
-              </Text>
-            </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter justifyContent='right'>
-              <Button variant='solid' colorScheme='blue'>
-                Ajouter au panier
-              </Button>
-          </CardFooter>
-        </Card>
-
-        <Card maxW='sm'>
-          <CardBody>
-            <Image
-              src='../src/assets/images/chaises.jpg'
-              alt='Chaise'
-              borderRadius='lg'
-            />
-            <Stack mt='6' spacing='3'>
-              <Heading size='md'><a>Living room Sofa</a></Heading>
-              <Text>
-                This sofa is perfect for modern tropical spaces, baroque inspired
-                spaces, earthy toned spaces and for people who love a chic design with a
-                sprinkle of vintage design.
-              </Text>
-              <Text color='blue.600' fontSize='2xl' ml='auto'>
-                $450
-              </Text>
-            </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter justifyContent='right'>
-              <Button variant='solid' colorScheme='blue'>
-                Ajouter au panier
-              </Button>
-          </CardFooter>
-        </Card>
-
-        <Card maxW='sm'>
-          <CardBody>
-            <Image
-              src='../src/assets/images/canape_panacota.jpg'
-              alt='Canapé panacota'
-              borderRadius='lg'
-            />
-            <Stack mt='6' spacing='3'>
-              <Heading size='md'><a>Living room Sofa</a></Heading>
-              <Text>
-                This sofa is perfect for modern tropical spaces, baroque inspired
-                spaces, earthy toned spaces and for people who love a chic design with a
-                sprinkle of vintage design.
-              </Text>
-              <Text color='blue.600' fontSize='2xl' ml='auto'>
-                $450
-              </Text>
-            </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter justifyContent='right'>
-              <Button variant='solid' colorScheme='blue'>
-                Ajouter au panier
-              </Button>
-          </CardFooter>
-        </Card>
-
-      </SimpleGrid>
-  );
-}
-
+          </Card>
+          ))}
+        </SimpleGrid>
+    );
+  }
+   
 export default HomePage;
