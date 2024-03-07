@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './Home.jsx'
 import Product from './Product.jsx'
 import NavBar from './composants/NavBar';
+import Connexion from './composants/Connexion.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

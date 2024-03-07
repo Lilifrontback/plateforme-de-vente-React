@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-import { Card, CardBody, CardFooter, Box } from '@chakra-ui/react';
+import { Card, CardBody } from '@chakra-ui/react';
 import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
 import { Divider } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
-
-// Exemple pour rendre la page dynamique.
-//@todo: A remplacer par un appel API pour récupérer les articles.
 
 const meuble = [
   {
@@ -45,47 +42,41 @@ const meuble = [
       prix: 39.99,
       image: "../src/assets/images/chaises.jpg",
   },
-
 ];
 
-
-/**
- * Rendu de la page d'accueil - cartes appelées dynamiquement avec la fonction map.
- * @todo: limiter le nombre de carte affichées.
- * @returns 6 Cards (photo, titre, prix, petite description et bouton "ajouter au panier") -- puisque 6 objets dans la constante-exemple 'meuble'.
- */
 function Home() {
     return (
-      <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)'>
-        {meuble.map(meuble => (
-          <Card key={meuble.id} maxW='sm'>
-            <CardBody>
-              <Image src={meuble.image} alt={meuble.nom} borderRadius='lg' />
-              <Stack mt='6' spacing='3'>
-                {/* Inclure l'ID de l'article dans l'URL */}
-                <Link to={`/product/${meuble.id}`}>
-                  <Heading size='md'>{meuble.nom}</Heading>
-                </Link>
-                <Text>
-                  This sofa is perfect for modern tropical spaces, baroque inspired
-                  spaces, earthy toned spaces and for people who love a chic design with a
-                  sprinkle of vintage design.
-                </Text>
-                <Text color='blue.600' fontSize='2xl' ml='auto'>
-                  {meuble.prix}€
-                </Text>
-              </Stack>
-            </CardBody>
-            <Divider />
-            <CardBody>
-              <Button variant='solid' colorScheme='blue'>
-                Ajouter au panier
-              </Button>
-            </CardBody>
-          </Card>
-        ))}
-      </SimpleGrid>
+      <Stack spacing={8} align="center" mt={8}>
+        <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)'>
+          {meuble.map(meuble => (
+            <Card key={meuble.id} maxW='sm'>
+              <CardBody>
+                <Image src={meuble.image} alt={meuble.nom} borderRadius='lg' />
+                <Stack mt='6' spacing='3'>
+                  <Link to={`/product/${meuble.id}`}>
+                    <Heading size='md'>{meuble.nom}</Heading>
+                  </Link>
+                  <Text>
+                    This sofa is perfect for modern tropical spaces, baroque inspired
+                    spaces, earthy toned spaces and for people who love a chic design with a
+                    sprinkle of vintage design.
+                  </Text>
+                  <Text color='blue.600' fontSize='2xl' ml='auto'>
+                    {meuble.prix}€
+                  </Text>
+                </Stack>
+              </CardBody>
+              <Divider />
+              <CardBody>
+                <Button variant='solid' colorScheme='blue'>
+                  Ajouter au panier
+                </Button>
+              </CardBody>
+            </Card>
+          ))}
+        </SimpleGrid>
+      </Stack>
     );
-  }
-  
-  export default Home;
+}
+
+export default Home;
