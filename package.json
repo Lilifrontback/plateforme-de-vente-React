@@ -10,14 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "cookie-session": "^2.1.0",
     "express": "^4.18.3",
-    "express-session": "^1.18.0"
-=======
-    "express": "^4.18.3",
+    "express-session": "^1.18.0",
     "mssql": "^10.0.2",
     "mysql": "^2.18.1"
->>>>>>> 3ac93a7cf8132d86a72ac034692bd132b674384b
   }
 }

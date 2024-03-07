@@ -1,7 +1,7 @@
 // Récupération des modules express et imports
 const express = require("express");
 const session = require('express-session');
-//express-session : à installer
+//express-session : à installer : faire npm install express-session
 const app = express();
 const port = 3000;
 //On récupère les paramètres de connection de la BDD
