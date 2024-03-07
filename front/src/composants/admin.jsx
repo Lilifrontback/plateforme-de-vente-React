@@ -18,11 +18,39 @@ import {
 } from '@chakra-ui/react';
 
 
-function HorizontalResponsiveExample() {
+function admin() {
+  const exemples = [
+    {
+      nom: "canapé fantastique",
+      photos: "photo",
+      catégorie: "canapé",
+      description: "canap de compet",
+      matière: "cuir",
+      couleur: "noir",
+      enstock: "true",
+      acheteur: "acheteur",
+      prix: "100"
+    },
+    {
+      nom: "table élégante",
+      photos: "photo2",
+      catégorie: "table",
+      description: "table design",
+      matière: "bois",
+      couleur: "blanc",
+      enstock: "true",
+      acheteur: "acheteur2",
+      prix: "150"
+    }
+  ];
+  const categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
+  const matières = ['mat 1', 'mat 2', 'mat 3'];
+
      return (
 <TableContainer>
   <Table variant='simple'>
-    <TableCaption>Imperial to metric conversion factors</TableCaption>
+    <TableCaption>inventaire</TableCaption>
+    {/* nom des catégories */}
     <Thead>
       <Tr>
         <Th>nom</Th>
@@ -34,101 +62,59 @@ function HorizontalResponsiveExample() {
         <Th>en stock</Th>
         <Th>acheteur</Th>
         <Th>prix</Th>
-<Stack direction='row' spacing={4} align='center'>
-    <Button colorScheme='teal' variant='ghost'>
-    ajouter
-    </Button>
-    <Button colorScheme='teal' variant='ghost'>
-    modifier
-  </Button>
-  <Button colorScheme='teal' variant='ghost'>
-    supprimer
-  </Button>
-</Stack>  
-      </Tr>
+        <Th>ajouter</Th>
+        <Th>modifier</Th>
+        <Th>supprimer</Th>
+        </Tr>
     </Thead>
     <Tbody>
       <Tr>
       <Td><Input placeholder="Entrez un nom" /></Td>
       <Td><Input placeholder="ajouter une photo" /></Td>
-      <Td><Input placeholder="choisir une catégorie" /></Td>
+      <Td><select><option value="">catégorie</option>
+      {categories.map((categorie, index) => (
+      <option key={index} value={categorie}>{categorie}</option>
+       ))}
+      </select></Td>
       <Td><Input placeholder="saisir une description" /></Td>
-      <Td><Input placeholder="choisir une matière" /></Td>
+         <Td><select><option value="">matière</option>
+      {matières.map((matières, index) => (
+      <option key={index} value={matières}>{matières}</option>
+      ))}
+       </select></Td>
       <Td><Input placeholder="saisir/choisir une couleur" /></Td>
       <Td><Input placeholder="en stock" /></Td>
       <Td><Input placeholder="acheteur" /></Td>
       <Td><Input placeholder="saisir un prix" /></Td>
-       
+      <Td><Button colorScheme='teal' variant='ghost'>
+    ajouter</Button></Td>  
       </Tr>
-      <Tr>
-        <Td>feet</Td>
-        <Td>centimetres (cm)</Td>
-        <Td isNumeric>30.48</Td>
-      </Tr>
-      <Tr>
-        <Td>yards</Td>
-        <Td>metres (m)</Td>
-        <Td isNumeric>0.91444</Td>
-      </Tr>
+
+          {exemples.map((exemple, index) => (
+            <Tr key={index}>
+              <Td>{exemple.nom}</Td>
+              <Td>{exemple.photos}</Td>
+              <Td>{exemple.catégorie}</Td>
+              <Td>{exemple.description}</Td>
+              <Td>{exemple.matière}</Td>
+              <Td>{exemple.couleur}</Td>
+              <Td>{exemple.enstock}</Td>
+              <Td>{exemple.acheteur}</Td>
+              <Td>{exemple.prix}</Td>
+              
+              <Td> <Button colorScheme='teal' variant='ghost'>ajouter</Button></Td>
+              <Td><Button colorScheme='teal' variant='ghost'>modifier</Button></Td>
+              <Td> <Button colorScheme='teal' variant='ghost'>supprimer</Button></Td>
+             
+            </Tr>
+          ))}
+   
     </Tbody>
     </Table>
     </TableContainer>
   );
 }
- export default HorizontalResponsiveExample;
+ export default admin;
 
 
 
-
-//  function HorizontalResponsiveExample() {
-//   return (
-//     <>
-//       {['sm', 'md', 'lg', 'xl', 'xxl'].map((breakpoint) => (
-//         <ListGroup key={breakpoint} horizontal={breakpoint} className="my-2">
-//           <ListGroup.Item>nom</ListGroup.Item>
-//           <ListGroup.Item>photos</ListGroup.Item>
-//           <ListGroup.Item>catégorie</ListGroup.Item>
-//           <ListGroup.Item>description</ListGroup.Item>
-//           <ListGroup.Item>matière</ListGroup.Item>
-//           <ListGroup.Item>couleur</ListGroup.Item>
-//           <ListGroup.Item>en stock</ListGroup.Item>
-//           <ListGroup.Item>acheteur</ListGroup.Item>
-//           <ListGroup.Item>prix</ListGroup.Item>
-//         </ListGroup>
-//       ))}
-//     </>
-//   );
-// }
-// export default HorizontalResponsiveExample;
-
-
-// function BasicExample() {
-//   return (
-//     <ButtonGroup aria-label="Basic example">
-//       <Button variant="secondary">ajouter</Button>
-//       <Button variant="secondary">modifier</Button>
-//       <Button variant="secondary">supprimer</Button>
-//     </ButtonGroup>
-//   );
-// }
-// export { HorizontalResponsiveExample, BasicExample };
-
-
-
-{/* <ul class="list-group">
-  <li class="list-group-item active" aria-current="true">nom</li>
-  <li class="list-group-item">photos</li>
-  <li class="list-group-item">catégorie</li>
-  <li class="list-group-item">description</li>
-  <li class="list-group-item">matière</li>
-  <li class="list-group-item">couleur</li>
-  <li class="list-group-item">en stock</li>
-  <li class="list-group-item">acheteur</li>
-  <li class="list-group-item">prix</li>
-</ul> */}
-
-{/* <div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-primary">ajouter</button>
-  <button type="button" class="btn btn-primary">modifier</button>
-  <button type="button" class="btn btn-primary">supprimer</button>
-</div> */}
