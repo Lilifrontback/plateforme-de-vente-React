@@ -1,7 +1,5 @@
 import * as React from 'react';
-// import ListGroup from 'react-bootstrap/ListGroup';
-// import Button from 'react-bootstrap/Button';
-// import ButtonGroup from 'react-bootstrap/ButtonGroup';
+// import fonctions tableau, bouton de la librairie chakra
 import {
   Table,
   Thead,
@@ -18,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 
-function admin() {
+function Admin() {
   const exemples = [
     {
       nom: "canapé fantastique",
@@ -46,6 +44,23 @@ function admin() {
   const categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
   const matières = ['mat 1', 'mat 2', 'mat 3'];
 
+  //en prévision pour rajouter un nouveau meuble dans la BDD par l'API à vérifier si fonctionnel
+  // const handleAddItem = () => {
+  //  Envoyer les données à l'API
+  //   fetch('https://api-url/endpoint', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //   .then(response => response.json())
+  //   .catch(error => {
+  //     console.error('Erreur lors de l\'ajout des données:', error);
+  //   });
+  // };
+
+
      return (
 <TableContainer>
   <Table variant='simple'>
@@ -67,10 +82,13 @@ function admin() {
         <Th>supprimer</Th>
         </Tr>
     </Thead>
+    {/* 1ère ligne du tableau avec insertion et menu déroulant pour créer un nouveau meuble dans la BDD */}
     <Tbody>
       <Tr>
+        {/* insertion champ libre */}
       <Td><Input placeholder="Entrez un nom" /></Td>
       <Td><Input placeholder="ajouter une photo" /></Td>
+      {/* menu déroulant */}
       <Td><select><option value="">catégorie</option>
       {categories.map((categorie, index) => (
       <option key={index} value={categorie}>{categorie}</option>
@@ -86,13 +104,15 @@ function admin() {
       <Td><Input placeholder="en stock" /></Td>
       <Td><Input placeholder="acheteur" /></Td>
       <Td><Input placeholder="saisir un prix" /></Td>
-      <Td><Button colorScheme='teal' variant='ghost'>
+      {/* Bouton */}
+      <Td><Button colorScheme='teal' variant='ghost'> 
+      {/* onClick={handleAddItem} à rajouter au bouton*/}
     ajouter</Button></Td>  
       </Tr>
 
-          {exemples.map((exemple, index) => (
+          {exemples.map((exemple, index) => ( //boucle qui parcourt l'objet
             <Tr key={index}>
-              <Td>{exemple.nom}</Td>
+              <Td>{exemple.nom}</Td>          
               <Td>{exemple.photos}</Td>
               <Td>{exemple.catégorie}</Td>
               <Td>{exemple.description}</Td>
@@ -114,7 +134,7 @@ function admin() {
     </TableContainer>
   );
 }
- export default admin;
+ export default Admin;
 
 
 

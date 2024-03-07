@@ -1,6 +1,8 @@
 
- import admin from './composants/admin';
+import Admin from './composants/admin.jsx';
 
- function Admin () {return (<admin/>)};
+function PageAdmin() {
+  return <Admin />;
+}
 
- export default Admin;
+export default PageAdmin;
