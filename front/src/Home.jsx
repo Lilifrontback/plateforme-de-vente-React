@@ -1,12 +1,13 @@
 import * as React from 'react';
 import './Home.css'; 
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Card, CardBody, CardFooter } from '@chakra-ui/react'
 import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
 import { Divider, ButtonGroup } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
-import { Box, Grid, GridItem } from '@chakra-ui/react'
 
-const meuble = [
+// Exemple d'ajout d'articles en dur:
+
+/* const meuble = [
     {
         id: 1,
         nom: "Canapé",
@@ -44,8 +45,14 @@ const meuble = [
         image: "../src/assets/images/chaises.jpg",
     },
 
-];
+]; */
 
+
+/**
+ * Fonction de création de 6 Cards avec Chakra.UI (en dur).
+ * TO DO: faire une boucle pour afficher chaque article en base de données, ne faire qu'une Card au lieu de 6.
+ * @returns 6 Cards (photo, titre, prix, petite description et bouton "ajouter au panier")
+ */
 function HomePage() {
     return (
         <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)' display='flex' flexWrap='wrap'>
@@ -63,21 +70,16 @@ function HomePage() {
         spaces, earthy toned spaces and for people who love a chic design with a
         sprinkle of vintage design.
       </Text>
-      <Text color='blue.600' fontSize='2xl'>
+      <Text color='blue.600' fontSize='2xl' ml='auto'>
         $450
       </Text>
     </Stack>
   </CardBody>
   <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
+  <CardFooter justifyContent='right'>
       <Button variant='solid' colorScheme='blue'>
-        Buy now
+        Ajouter au panier
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
   </CardFooter>
 </Card>
 <Card maxW='sm'>
@@ -94,21 +96,16 @@ function HomePage() {
         spaces, earthy toned spaces and for people who love a chic design with a
         sprinkle of vintage design.
       </Text>
-      <Text color='blue.600' fontSize='2xl'>
+      <Text color='blue.600' fontSize='2xl' ml='auto'>
         $450
       </Text>
     </Stack>
   </CardBody>
   <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
+  <CardFooter justifyContent='right'>
       <Button variant='solid' colorScheme='blue'>
-        Buy now
+        Ajouter au panier
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
   </CardFooter>
 </Card>
 <Card maxW='sm'>
@@ -125,21 +122,16 @@ function HomePage() {
         spaces, earthy toned spaces and for people who love a chic design with a
         sprinkle of vintage design.
       </Text>
-      <Text color='blue.600' fontSize='2xl'>
+      <Text color='blue.600' fontSize='2xl' ml='auto'>
         $450
       </Text>
     </Stack>
   </CardBody>
   <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
+  <CardFooter justifyContent='right'>
       <Button variant='solid' colorScheme='blue'>
-        Buy now
+        Ajouter au panier
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
   </CardFooter>
 </Card>
 <Card maxW='sm'>
@@ -156,21 +148,16 @@ function HomePage() {
         spaces, earthy toned spaces and for people who love a chic design with a
         sprinkle of vintage design.
       </Text>
-      <Text color='blue.600' fontSize='2xl'>
+      <Text color='blue.600' fontSize='2xl' ml='auto'>
         $450
       </Text>
     </Stack>
   </CardBody>
   <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
+  <CardFooter justifyContent='right'>
       <Button variant='solid' colorScheme='blue'>
-        Buy now
+        Ajouter au panier
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
   </CardFooter>
 </Card>
 <Card maxW='sm'>
@@ -187,21 +174,16 @@ function HomePage() {
         spaces, earthy toned spaces and for people who love a chic design with a
         sprinkle of vintage design.
       </Text>
-      <Text color='blue.600' fontSize='2xl'>
+      <Text color='blue.600' fontSize='2xl' ml='auto'>
         $450
       </Text>
     </Stack>
   </CardBody>
   <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
+  <CardFooter justifyContent='right'>
       <Button variant='solid' colorScheme='blue'>
-        Buy now
+        Ajouter au panier
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
   </CardFooter>
 </Card>
 <Card maxW='sm'>
@@ -218,21 +200,16 @@ function HomePage() {
         spaces, earthy toned spaces and for people who love a chic design with a
         sprinkle of vintage design.
       </Text>
-      <Text color='blue.600' fontSize='2xl'>
+      <Text color='blue.600' fontSize='2xl' ml='auto'>
         $450
       </Text>
     </Stack>
   </CardBody>
   <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
+  <CardFooter justifyContent='right'>
       <Button variant='solid' colorScheme='blue'>
-        Buy now
+        Ajouter au panier
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
   </CardFooter>
 </Card>
 
