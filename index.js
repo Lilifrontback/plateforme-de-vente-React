@@ -68,7 +68,7 @@ app.put("/meubles/:id", (req, res) =>{
 })
 
 
-// Route get pour récupérer les meubles de la BDD
+//Route get pour récupérer les meubles de la BDD
 //Des paramètres peuvent être passés dans l'url de la requête coté front pour filtrer les meubles par couleur, catégorie, matière
 //TODO, modifier cette route pour lui permettre de prendre en compte plusieurs filtres en meme temps (ex: je veux des chaises rouges en velours)
 //TODO, une fois le cumul de filtres possible, ajouter notamment le filtre stock = 1 
