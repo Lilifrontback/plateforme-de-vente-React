@@ -1,16 +1,17 @@
  import React from 'react';
-
- import data from './TemplateData.json';
+ import { Box, Input, Button, ButtonGroup } from '@chakra-ui/react';
 
 
 // barre de recherche --> apparait
 
 function SearchBar() {
   return (
-    <form>
-    <input id="searchInput" type="text" placeholder="Search..." />
-    <button type="submit">Search</button>
-  </form>
+    <Box>
+      <ButtonGroup spacing={4}>
+      <Input id="searchInput" type="text" placeholder="Search..." />
+      <Button type="submit">Search</Button>
+      </ButtonGroup>
+    </Box>
   );
 };
 

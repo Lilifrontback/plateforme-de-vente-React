@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchBar from '../src/composants/SearchBar.jsx'
 import { Link } from "react-router-dom";
 import { Card, CardBody } from '@chakra-ui/react';
 import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
@@ -47,6 +48,7 @@ const meuble = [
 function Home() {
     return (
       <Stack spacing={8} align="center" mt={8}>
+        <SearchBar />
         <SimpleGrid spacing={4} templateColumns='repeat(3,1fr)' justifyItems='center'>
           {meuble.map(meuble => (
             <Card key={meuble.id} maxW='xs'>

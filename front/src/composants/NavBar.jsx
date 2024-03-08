@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Flex, Spacer, Button, IconButton, useColorMode, useColorModeValue, Image } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Button, ButtonGroup, IconButton, useColorMode, useColorModeValue, Image } from '@chakra-ui/react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 function NavBar() {
@@ -31,12 +31,24 @@ function NavBar() {
           </Flex>
         </Box>
         <Spacer />
+        <ButtonGroup spacing={4}>
+        <Link to="/admin">
+              <Button colorScheme="blue" variant="solid">
+                Admin
+              </Button>
+        </Link>
+        <Link to="/basket">
+              <Button colorScheme="blue" variant="solid">
+                Panier
+              </Button>
+        </Link>
         <IconButton
           aria-label="Toggle color mode"
           icon={colorModeIcon}
           onClick={toggleColorMode}
           variant="ghost"
         />
+        </ButtonGroup>
       </Flex>
     </Box>
   );
