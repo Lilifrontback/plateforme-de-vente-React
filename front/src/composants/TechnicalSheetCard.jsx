@@ -1,12 +1,17 @@
-import * as React from 'react';
-import { Container } from '@chakra-ui/react';
+import React from 'react';
+import { Flex, Box, Text } from '@chakra-ui/react';
 
-function TechnicalSheetCard() {
+function TechnicalSheetCard({ product }) {
     return (
-        <Container>
-            Dimensions: 2m x 1.5m
-        </Container>
-    )
+        <Flex justifyContent="flex-end" alignItems="center" mt={4} ml={2}>
+            <Box bg="blue.500" p={4} borderRadius="md" w='300px'>
+                <Text fontWeight="bold" mb={2}>Caractéristiques :</Text>
+                <Text>Nom: {product.nom}</Text>
+                <Text>Prix: {product.prix}€</Text>
+                {/* Ajoutez d'autres caractéristiques ici */}
+            </Box>
+        </Flex>
+    );
 }
 
 export default TechnicalSheetCard;

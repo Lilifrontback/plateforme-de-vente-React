@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, Center } from '@chakra-ui/react';
 
 function AddToCartButton() {
     return (
-        <Button colorScheme='teal' size='xs'>
-            Add To Cart
-        </Button>
+        <Center>
+            <Button colorScheme='blue' variant='solid' size='md'>
+                Add To Cart
+            </Button>
+        </Center>
     )
 }
 

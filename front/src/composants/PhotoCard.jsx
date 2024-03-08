@@ -1,18 +1,12 @@
-import * as React from 'react';
-import { SimpleGrid, Box } from '@chakra-ui/react';
+import React from 'react';
+import { Box, Image } from '@chakra-ui/react';
 
-
-function PhotoCard(){
-
+function PhotoCard({ image }) {
     return (
-        <SimpleGrid columns={2} spacingX='40px' spacingY='20px'>
-            <Box bg='tomato' height='150px'></Box>
-            <Box bg='tomato' height='80px'></Box>
-            <Box bg='tomato' height='80px'></Box>
-            <Box bg='tomato' height='80px'></Box>
-            <Box bg='tomato' height='80px'></Box>
-        </SimpleGrid>
-    )
+        <Box mt={4}>
+            <Image src={image} alt="Product" maxW="400px" h="auto" borderRadius="md" />
+        </Box>
+    );
 }
 
 export default PhotoCard;

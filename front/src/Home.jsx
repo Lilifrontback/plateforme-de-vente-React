@@ -6,7 +6,8 @@ import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
 import { Divider } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
 
-const meuble = [
+// On export la constante pour la récupérer dans d'autres pages
+export const meuble = [
   {
       id: 1,
       nom: "Canapé",
