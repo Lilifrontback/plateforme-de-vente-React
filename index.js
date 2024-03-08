@@ -67,8 +67,7 @@ app.put("/meubles/:id", (req, res) =>{
   });
 })
 
-//Route pour supprimer un meuble en fonction de son id (afin de ne PAS supprimer toute la table ;) )
-//Pour faire le test on a créé une chaise test dans la table afin de ne pas supprimer les données créées par Jean-Clément
+
 // Route get pour récupérer les meubles de la BDD
 //Des paramètres peuvent être passés dans l'url de la requête coté front pour filtrer les meubles par couleur, catégorie, matière
 //TODO, modifier cette route pour lui permettre de prendre en compte plusieurs filtres en meme temps (ex: je veux des chaises rouges en velours)
@@ -158,7 +157,8 @@ app.get("/meubles", function (req, res) {
 
 });
 
-// Route delete by id pour supprimer un meuble de la BDD en passant un ID dans la requête
+//Route pour supprimer un meuble en fonction de son id (afin de ne PAS supprimer toute la table ;) )
+//Pour faire le test on a créé une chaise test dans la table afin de ne pas supprimer les données créées par Jean-Clément
 app.delete("/meubles/:id", function (req, res) {
   const id = parseInt(req.params.id);
   console.log("ID Récupéré : ", id);
