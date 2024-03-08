@@ -1,0 +1,44 @@
+[
+     {
+      "id": 1,
+      "nom": "Chaise de Toutânkhamon",
+      "categorie_id": 3,
+      "descriptif": "Superbe chaise du onzième pharaon de la XVIII dynastie, fils d’Akhenaton",
+      "prix": 23256804,
+      "dimension": "48x55x71",
+      "vendeur_id": null,
+      "acheteur_id": null,
+      "matiere_id": 1,
+  
+      "couleur_id": 6,
+      "stock": 1
+    },
+     {
+      "id": 2,
+      "nom": "Chaise Panton",
+      "categorie_id": 3,
+      "descriptif": "Chaise confortable du designer danois éponyme",
+      "prix": 12000,
+      "dimension": "19x57,8x83,8",
+      "vendeur_id": null,
+      "acheteur_id": null,
+      "matiere_id": 5,
+     
+      "couleur_id": 5,
+      "stock": 1
+    },
+     {
+      "id": 4,
+      "nom": "Table Colbert",
+      "categorie_id": 4,
+      "descriptif": "Une table appréciée pour sa rondeur",
+      "prix": 57800,
+      "dimension": "57x100x77",
+      "vendeur_id": null,
+      "acheteur_id": null,
+      "matiere_id": 1,
+     
+      "couleur_id": 1,
+      "stock": 1
+    }
+]
