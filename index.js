@@ -18,10 +18,6 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-//Route de test pour vérifier que le serveur est bien lancé 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 //route pour Ajouter un meuble
 app.post("/meubles",(req,res) => {
@@ -43,11 +39,6 @@ app.post("/meubles",(req,res) => {
   res.status(201).json({
     message: 'Objet créé !'
   });
-});
-
-// Route get test qui permet de tester le serveur sur un exemple
-app.get("/", (req, res) => {
-  res.send("Hello World!");
 });
 
 
@@ -186,7 +177,8 @@ app.delete("/meubles/:id", function (req, res) {
   );
 });
 
-// Route get récupérer meubles where en stock = true. TODO : Sera à fusionner avec la route GET globale une fois qu'elle pourra cumuler plusieurs paramètres
+// Route get récupérer meubles where en stock = true. 
+//TODO: Sera à fusionner avec la route GET globale une fois qu'elle pourra cumuler plusieurs paramètres
 app.get("/meublesenstock", function (req, res) {
   database.query("SELECT * FROM Meubles WHERE stock = 1", (err, rows, fields) => {
     if (err) {
@@ -216,7 +208,7 @@ app.get("/meublesenstock/:id",  (req, res) => {
   });
 })
 
-//ROUTES TODO
+// TODO ROUTES
 //Voir la route GET /meubles à améliorer
 //Route POST commande pour ajout nouvel article au panier (qui ajoute une ligne à la table commande en BDD)
 //Route GET commande (pour affichage panier)
@@ -245,16 +237,19 @@ app.use((req, res, next) => {
   next()
 });
 
-//Chemin vers le html dans le dossier public : TODO : à changer !!
+//Chemin vers le html dans le dossier public : 
+//TODO: à changer!!
 app.use(express.static('public'));
 
-//Requête de session
+//Trame de la requête panier qui récupère la session
+//TODO rajouter requête de récupéréation des lignes dans la table commande qui correspondent à la session/utilisateur
 app.get('/panier', (req, res) => {
   //Récupération de la réponse de la requête en json, avec chemin vers panier
   res.json(req.session.panier);
 });
 
 //Requête d'envoi dans le panier
+//TODO rajouter ici requête pour envoyer l'article dans la table commande
 app.post('/', (req, res) => { 
   //Envoyer au panier et rester sur la page
   req.session.panier[req.query.name] = req.body.qty;
