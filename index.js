@@ -90,7 +90,7 @@ app.get("/meubles", function (req, res) {
 //On gère le cas où aucun paramètre n'a été passé dans l'url de la requete (pas de filtre)
   if (couleur === undefined && categorie === undefined && matiere === undefined && id === undefined){
 
-    database.query("SELECT * FROM Meubles", (err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
       if (err) {
         console.log("erreur dans la requête", err);
         res.status(500).send("erreur interne du serveur");
@@ -104,7 +104,7 @@ app.get("/meubles", function (req, res) {
   //On gère au cas par cas les paramètres passés. Pour l'instant la fonction ne gère pas plusieurs paramètres en meme temps
 
   else if (couleur != undefined) {
-    database.query("SELECT * FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id WHERE Couleurs.nom = ?",[couleur],(err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id WHERE Couleurs.nom = ?",[couleur],(err, rows, fields) => {
       if (err) {
         console.log("Les meubles de cette couleur n'ont pas été trouvés",err.message);
         res.status(500).send("erreur interne du serveur");
@@ -117,7 +117,7 @@ app.get("/meubles", function (req, res) {
   }
 
   else if (categorie != undefined) {
-    database.query("SELECT * FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id WHERE Categories.nom = ?",[categorie],(err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id WHERE Categories.nom = ?",[categorie],(err, rows, fields) => {
       if (err) {
         console.log("Les meubles de cette categorie n'ont pas été trouvés",err.message);
         res.status(500).send("erreur interne du serveur");
@@ -130,7 +130,7 @@ app.get("/meubles", function (req, res) {
   }
 
   else if (matiere != undefined) {
-    database.query("SELECT * FROM Meubles INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Matieres.nom = ?",[matiere],(err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Matieres.nom = ?",[matiere],(err, rows, fields) => {
       if (err) {
         console.log("Les meubles de cette categorie n'ont pas été trouvés",err.message);
         res.status(500).send("erreur interne du serveur");
@@ -143,7 +143,7 @@ app.get("/meubles", function (req, res) {
   }
 
   else if (id != undefined) {
-    database.query("SELECT * FROM Meubles WHERE id = ?",[id],(err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles WHERE id = ?",[id],(err, rows, fields) => {
       if (err) {
         console.log("Le meuble n'a pas été trouvé",err.message);
         res.status(500).send("erreur interne du serveur");
