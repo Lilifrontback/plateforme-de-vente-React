@@ -1,10 +1,9 @@
 import React from "react"
+const apiUrl = 'http://localhost:3000/'
 
 function fetchMeubles() {
-fetch('http://localhost:3000/meubles')
+return fetch(`${apiUrl}meubles`)
 .then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error))
 }
 
 export default fetchMeubles

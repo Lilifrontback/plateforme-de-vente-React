@@ -17,6 +17,11 @@ import {
   Input
 } from '@chakra-ui/react';
 
+//Import données meubles
+fetchMeubles()
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error))
+
 
 function Admin() {
   const exemples = [
@@ -45,8 +50,9 @@ function Admin() {
   ];
   const categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
   const matières = ['mat 1', 'mat 2', 'mat 3'];
-  
-  fetchMeubles();
+
+
+
   //   const handleAddItem = () => {
   //   fetch('http://localhost:3000/meubles', {
   //     method: 'GET',
