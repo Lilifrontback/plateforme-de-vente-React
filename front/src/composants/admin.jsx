@@ -1,5 +1,7 @@
 import * as React from 'react';
 // import fonctions tableau, bouton de la librairie chakra
+
+import fetchMeubles from '../services/apiService';
 import {
   Table,
   Thead,
@@ -43,7 +45,8 @@ function Admin() {
   ];
   const categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
   const matières = ['mat 1', 'mat 2', 'mat 3'];
-
+  
+  fetchMeubles();
   //   const handleAddItem = () => {
   //   fetch('http://localhost:3000/meubles', {
   //     method: 'GET',
@@ -59,10 +62,6 @@ function Admin() {
   //   });
   // };
   
-fetch('http://localhost:3000/meubles')
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error))
 
 
      return (
