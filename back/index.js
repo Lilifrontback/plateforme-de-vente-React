@@ -37,7 +37,9 @@ app.post("/meubles",(req,res) => {
   //envoie de la requête
   database.query(addMeubles,[meubleAjoute.nom,meubleAjoute.categorie_id,meubleAjoute.descriptif,meubleAjoute.prix,meubleAjoute.dimension, meubleAjoute.vendeur_id,meubleAjoute.acheteur_id,meubleAjoute.matiere_id,meubleAjoute.photo,meubleAjoute.couleur_id,meubleAjoute.stock])
   res.status(201).json({
-    message: 'Objet créé !'
+    message: 'Objet créé !' 
+    
+    
   });
 });
 
@@ -46,11 +48,23 @@ app.post("/meubles",(req,res) => {
 app.put("/meubles/:id", (req, res) =>{
   const recup = (req.body) // Récupération des données du form en format Json
   const id = parseInt(req.params.id) //Récupération de l'id via la route
-  const couleurId = recup.couleur_id
-  console.log("couleurId recupéré : ",couleurId)
-  console.log("ID Récupéré: ",id)
-  let paramQuery=[couleurId,id] //Bien mettre les paramètres dans ce tableau dans l'ordre des points d'interrogation de la requête
-  database.query("UPDATE Meubles SET couleur_id = ? WHERE id = ?",paramQuery,(err, result) => {
+  
+  const nom = recup.nom
+  const categorie_id = recup.categorie_id
+  const descriptif = recup.descriptif
+  const prix = recup.prix
+  const dimension = recup.dimension
+  const vendeur_id = recup.vendeur_id
+  const acheteur_id = recup.acheteur_id
+  const matiere_id = recup.matiere_id
+  const couleur_id = recup.couleur_id
+  
+  //console.log("categorieId : ",categorieId)
+  console.log("couleurId : ",couleur_id)
+  console.log("ID : ",id)
+  
+  let paramQuery=[nom,categorie_id,descriptif,prix,dimension,vendeur_id,acheteur_id,matiere_id,couleur_id,id] //Bien mettre les paramètres dans ce tableau dans l'ordre des points d'interrogation de la requête
+  database.query("UPDATE Meubles SET  nom = ?, categorie_id = ?, descriptif = ?, prix = ?, dimension = ?, vendeur_id = ?, acheteur_id = ?, matiere_id = ?, couleur_id = ?  WHERE id = ?",paramQuery,(err, result) => {
     if(err){
       res.json({
         status:400,
