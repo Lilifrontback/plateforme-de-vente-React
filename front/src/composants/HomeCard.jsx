@@ -1,3 +1,4 @@
+// Redondant? A suppr?
 export default function HomeCard({ id, nom, prix }) {
     return (
         <div>

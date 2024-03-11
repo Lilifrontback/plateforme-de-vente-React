@@ -43,7 +43,7 @@ export const meuble = [
       nom: "Chaises",
       prix: 39.99,
       image: "../src/assets/images/chaises.jpg",
-  },
+  }
 ];
 
 function Home() {
@@ -61,6 +61,7 @@ function Home() {
                     <Heading size='md'>{meuble.nom}</Heading>
                   </Link>
                   <Text>
+                     {/*Description à rendre dynamique avec les données*/}
                     This sofa is perfect for modern tropical spaces, baroque inspired
                     spaces, earthy toned spaces and for people who love a chic design with a
                     sprinkle of vintage design.
@@ -73,6 +74,7 @@ function Home() {
               <Divider />
               <CardBody>
                 <Button variant='solid' colorScheme='blue'>
+                 {/*Appeller le composant Bouton et linkto ajout panier*/}
                   Ajouter au panier
                 </Button>
               </CardBody>

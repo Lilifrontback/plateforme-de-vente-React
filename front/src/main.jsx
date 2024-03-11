@@ -2,7 +2,7 @@ import * as React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
 
-// Installation npm install react-router-dom
+// Installation npm install
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Home from './Home.jsx'

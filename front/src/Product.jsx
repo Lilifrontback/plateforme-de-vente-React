@@ -1,3 +1,4 @@
+// Todo : tester injection de données et voir modif restantes notamment visuelles
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import PhotoCard from './composants/PhotoCard';
