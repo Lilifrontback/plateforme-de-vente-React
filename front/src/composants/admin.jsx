@@ -44,21 +44,25 @@ function Admin() {
   const categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
   const matières = ['mat 1', 'mat 2', 'mat 3'];
 
-  //en prévision pour rajouter un nouveau meuble dans la BDD par l'API à vérifier si fonctionnel
-  // const handleAddItem = () => {
-  //  Envoyer les données à l'API
-  //   fetch('https://api-url/endpoint', {
-  //     method: 'POST',
+  //   const handleAddItem = () => {
+  //   fetch('http://localhost:3000/meubles', {
+  //     method: 'GET',
   //     headers: {
   //       'Content-Type': 'application/json',
   //     },
   //     body: JSON.stringify(formData),
-  //   })
+  //   },
+  //   console.log(formData))
   //   .then(response => response.json())
   //   .catch(error => {
   //     console.error('Erreur lors de l\'ajout des données:', error);
   //   });
   // };
+  
+fetch('http://localhost:3000/meubles')
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error))
 
 
      return (
