@@ -5,7 +5,7 @@ import PhotoCard from './composants/PhotoCard';
 import DescriptionCard from './composants/DescriptionCard';
 import TechnicalSheetCard from './composants/TechnicalSheetCard';
 import AddToCartButton from './composants/AddToCartButton';
-import { Grid, Container, Flex } from '@chakra-ui/react';
+import { Grid, Box, HStack, GridItem } from '@chakra-ui/react';
 
 import { meuble } from './Home'
 
@@ -17,22 +17,47 @@ function Product() {
     const product = meuble.find(item => item.id === parseInt(id));
 
     return (
-        <Grid>
-            <Container>
-                <Flex>
-                    <PhotoCard image={product.image} />
-                    <TechnicalSheetCard product={product} />
-                </Flex>
-            </Container>
+        
+        <Grid
+            h='100%'
+            w='100%'
+            templateRows='repeat(3, 1fr)'
+            templateColumns='repeat(5, 1fr)'
+            gap={4} 
+            mt='3%'
+            mb='4%'
+        >
+            <GridItem colSpan={1}>
+                
+            </GridItem>
 
-            <Container mt={4}>
+            <GridItem rowSpan={3} colSpan={1}>
+                <HStack>
+                    <Box><PhotoCard image={product.image} /></Box>
+                </HStack>
+            </GridItem>
+
+            <GridItem colSpan={2}>
+                <HStack>
+                    <Box><TechnicalSheetCard product={product} /></Box>
+                </HStack>
+            </GridItem>
+
+            <GridItem colSpan={2} mt={2}>
                 <DescriptionCard description={product.description} />
-            </Container>
+            </GridItem>
 
-            <Container mt={4}>
+            <GridItem colSpan={2} mt={2}>
                 <AddToCartButton product={product} />
-            </Container>
+            </GridItem>
+
+            <GridItem colSpan={1}>
+                
+            </GridItem>
         </Grid>
+
+
+        
     );
 }
 

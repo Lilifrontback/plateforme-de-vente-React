@@ -9,7 +9,7 @@ import Home from './Home.jsx'
 import Product from './Product.jsx'
 import NavBar from './composants/NavBar';
 import Connexion from './composants/Connexion.jsx'
-import Footer from '../src/composants/Footer.jsx'
+import Footer from './composants/Footer.jsx'
 import Admin from './Admin.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
