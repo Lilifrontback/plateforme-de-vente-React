@@ -20,7 +20,7 @@ app.listen(port, () => {
 
 
 //route pour Ajouter un meuble
-app.post("/meubles",(req,res) => {
+app.post("/admin",(req,res) => {
   let meubleAjoute
   console.log(req.body) //ça pourra changer en fonction du formulaire créé en front
   meubleAjoute=req.body
@@ -45,7 +45,7 @@ app.post("/meubles",(req,res) => {
 
 
 //modification des paramètres d'un meuble. /!\ seulement fait pour couleur_id mais possible de le faire pour tous
-app.put("/meubles/:id", (req, res) =>{
+app.put("/admin/:id", (req, res) =>{
   const recup = (req.body) // Récupération des données du form en format Json
   const id = parseInt(req.params.id) //Récupération de l'id via la route
   
@@ -81,13 +81,45 @@ app.put("/meubles/:id", (req, res) =>{
   });
 })
 
+// essai pour afficher les 6 cards de la page home
+
+app.get("/", function (req, res) { 
+  let limit = req.query.limit || 6 ; 
+  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles LIMIT ${limit}`;
+  database.query(query,  (err, rows) => {
+      if (err) {
+        console.log("erreur dans la requête", err);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      } else {
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+     }
+    });
+
+  })
+
+  //essai afficher la page product (détail)
+  app.get("/product/:id", function (req, res) { 
+  const productId = req.params.id; // Récupérer l'ID du produit à partir des paramètres de l'URL
+
+  database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Meubles.dimension, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Meubles.id = ?", [productId], (err, rows, fields) => {
+    if (err) {
+      console.log("Erreur dans la requête", err);
+      res.status(500).send("Erreur interne du serveur");
+      return;
+    }
+    console.log("Résultat de la requête :", rows);
+    res.json(rows);
+  });
+});
 
 //Route get pour récupérer les meubles de la BDD
 //Des paramètres peuvent être passés dans l'url de la requête coté front pour filtrer les meubles par couleur, catégorie, matière
 //TODO, modifier cette route pour lui permettre de prendre en compte plusieurs filtres en meme temps (ex: je veux des chaises rouges en velours)
 //TODO, une fois le cumul de filtres possible, ajouter notamment le filtre stock = 1 
 
-app.get("/meubles", function (req, res) {
+app.get("/searchbar", function (req, res) { //suppression /meuble pas de page meuble >> Lise
 
 // On récupère dans des variables les paramètres potentiellement passés dans l'url de la requete
   console.log(req.query)
@@ -95,6 +127,8 @@ app.get("/meubles", function (req, res) {
   let categorie = req.query.categorie;
   let matiere = req.query.matiere;
   let id = req.query.id;
+  let prix = req.query.prix;
+  let stock = req.query.stock;
 
   console.log("couleur : ",couleur)
   console.log("catégorie : ",categorie)
@@ -102,9 +136,9 @@ app.get("/meubles", function (req, res) {
   console.log("id : ",id)
 
 //On gère le cas où aucun paramètre n'a été passé dans l'url de la requete (pas de filtre)
-  if (couleur === undefined && categorie === undefined && matiere === undefined && id === undefined){
+  if (couleur === undefined && categorie === undefined && matiere === undefined && id === undefined && prix === undefined && stock === undefined){
 
-    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
       if (err) {
         console.log("erreur dans la requête", err);
         res.status(500).send("erreur interne du serveur");
@@ -167,13 +201,38 @@ app.get("/meubles", function (req, res) {
       res.json(rows);
   
     });
+  }   else if (prix != undefined) {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles WHERE id = ?",[prix],(err, rows, fields) => {
+      if (err) {
+        console.log("Le meuble n'a pas été trouvé",err.message);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      }
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+  
+    });
   }
+  else if (stock != undefined) {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles WHERE id = ?",[stock],(err, rows, fields) => {
+      if (err) {
+        console.log("Le meuble n'a pas été trouvé",err.message);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      }
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+  
+    });
+  }
+
+
 
 });
 
 //Route pour supprimer un meuble en fonction de son id (afin de ne PAS supprimer toute la table ;) )
 //Pour faire le test on a créé une chaise test dans la table afin de ne pas supprimer les données créées par Jean-Clément
-app.delete("/meubles/:id", function (req, res) {
+app.delete("/admin/:id", function (req, res) {
   const id = parseInt(req.params.id);
   console.log("ID Récupéré : ", id);
   database.query(
