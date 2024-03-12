@@ -4,7 +4,7 @@ import { Box, Image } from '@chakra-ui/react';
 function PhotoCard({ image }) {
     return (
         <Box mt={4}>
-            <Image src={image} alt="Product" maxW="400px" h="auto" borderRadius="md" />
+            <Image src={image} alt="Product" maxW="250px" h="auto" borderRadius="md" />
         </Box>
     );
 }

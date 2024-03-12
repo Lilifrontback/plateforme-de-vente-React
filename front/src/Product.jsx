@@ -29,7 +29,7 @@ function Product() {
 
       <GridItem rowSpan={3} colSpan={1}>
         <HStack>
-          <Box>
+          <Box >
             <PhotoCard image={product.photo} />
           </Box>
         </HStack>
