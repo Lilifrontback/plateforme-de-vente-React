@@ -7,7 +7,7 @@ import { Divider } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 
 //Import données meubles
-import fetchMeubles from "./services/apiService.jsx";
+import {fetchMeubles} from "./services/apiService.jsx";
 
 // On export la constante pour la récupérer dans d'autres pages
 export const meubles = await fetchMeubles().catch((error) =>
