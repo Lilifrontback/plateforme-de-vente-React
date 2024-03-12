@@ -43,8 +43,34 @@ app.post("/meubles",(req,res) => {
   });
 });
 
+//route pour Ajouter un utilisateur et mot de passenpm start
 
-//modification des paramètres d'un meuble. /!\ seulement fait pour couleur_id mais possible de le faire pour tous
+app.post("/utilisateurs",(req,res) => {
+  let utilisateurAjoute = req.body;
+
+  // Création de la requête SQL pour insérer le mot de passe dans la table Motdepasse
+  let addMotDePasse = `INSERT INTO Motdepasse (hash) VALUES (?)`;
+  // Envoi de la requête pour insérer le mot de passe
+  database.query(addMotDePasse, [utilisateurAjoute.motdepasse], (err, result) => {
+  // Récupérer l'ID du mot de passe inséré
+  const motdepasseId = result.insertId;
+  // Création de la requête SQL pour insérer l'utilisateur dans la table Utilisateurs
+  let addUtilisateur= `INSERT INTO Utilisateurs (nom, mail, motdepasse_id, telephone) VALUES (?, ?, ?, ?)`;
+  // Envoi de la requête pour insérer l'utilisateur
+    database.query(addUtilisateur, [utilisateurAjoute.nom, utilisateurAjoute.mail, motdepasseId, utilisateurAjoute.telephone], (err, result) => {
+    console.log("Utilisateur ajouté avec succès.");
+    res.status(201).json({ message: "Utilisateur ajouté avec succès.", motdepasse_id: motdepasseId });
+      
+    });
+  });
+});
+
+
+
+
+
+
+//modification des paramètres d'un meuble. 
 app.put("/meubles/:id", (req, res) =>{
   const recup = (req.body) // Récupération des données du form en format Json
   const id = parseInt(req.params.id) //Récupération de l'id via la route
