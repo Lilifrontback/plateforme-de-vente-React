@@ -11,3 +11,9 @@ export function fetchMeublesEnStock() {
     .then(response => response.json())
 }
 
+
+export function fetchMeublesFiltres(filtre,valeur) {
+    return fetch(`${apiUrl}meubles/?{filtre}={valeur}`)
+    .then(response => response.json())
+}
+
