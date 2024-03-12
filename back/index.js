@@ -114,7 +114,7 @@ app.put("/meubles/:id", (req, res) =>{
 
 app.get("/", function (req, res) { 
   let limit = req.query.limit || 6 ; 
-  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles LIMIT ${limit}`;
+  let query = `SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles LIMIT ${limit}`;
   database.query(query,  (err, rows) => {
       if (err) {
         console.log("erreur dans la requête", err);
@@ -132,7 +132,7 @@ app.get("/", function (req, res) {
   app.get("/product/:id", function (req, res) { 
   const productId = req.params.id; // Récupérer l'ID du produit à partir des paramètres de l'URL
 
-  database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Meubles.dimension, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Meubles.id = ?", [productId], (err, rows, fields) => {
+  database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Meubles.dimension, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Meubles.id = ?", [productId], (err, rows, fields) => {
     if (err) {
       console.log("Erreur dans la requête", err);
       res.status(500).send("Erreur interne du serveur");
@@ -356,7 +356,7 @@ app.get("/meublesenstock/:id",  (req, res) => {
 //Et plus si affinités!!
 
 app.get("/meubles", function (req, res) {
-  database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id", (err, rows, fields) => {
+  database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id", (err, rows, fields) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
