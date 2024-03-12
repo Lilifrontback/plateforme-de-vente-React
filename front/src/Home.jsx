@@ -39,7 +39,7 @@ function Home() {
         {meubles.map((meuble) => (
           <Card key={meuble.id} maxW="xs">
             <CardBody>
-              <Image src={meuble.photo} alt={meuble.nom} borderRadius="lg" />
+              <Image src={meuble.photo} alt={meuble.nom} borderRadius='lg' boxSize="300px" objectFit="cover" />
               <Stack mt="6" spacing="3">
                 {/* Inclure l'ID de l'article dans l'URL */}
                 <Link to={`/product/${meuble.id}`}>
