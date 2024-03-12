@@ -18,12 +18,9 @@ export const meubles = await fetchMeubles().catch((error) =>
 
 function Home() {
   const filtreParCategorie = ['Chaise', 'Table', 'Lit'];
-  const [filteredMeubles, setFilteredMeubles] = useState(meubles);
-
+  const selectionFiltre = (filtreChoisi) => {
     // Filtrer les meubles en fonction du filtre sélectionné
-    const selectionFiltre = async (filtreChoisi) => {
-    const meublesFiltrés = await fetchMeublesFiltres(Categorie,filtreChoisi)
-    meubles.filter((meuble) => meuble.categorie === filtreChoisi);
+    const meublesFiltrés = meubles.filter((meuble) => meuble.categorie === filtreChoisi);
     setFilteredMeubles(meublesFiltrés);
     console.log(`Filtre sélctionné: ${filtreChoisi}`);
   };
@@ -72,3 +69,4 @@ function Home() {
 }
 
 export default Home;
+
