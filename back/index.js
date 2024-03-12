@@ -287,6 +287,17 @@ app.get("/meublesenstock/:id",  (req, res) => {
 //Route GET commande (pour affichage panier)
 //Et plus si affinités!!
 
+app.get("/meubles", function (req, res) {
+  database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id", (err, rows, fields) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+});
 
 
 //SESSIONS : 
@@ -328,3 +339,6 @@ app.post('/', (req, res) => {
   req.session.panier[req.query.name] = req.body.qty;
   res.redirect('/')
 });
+
+
+
