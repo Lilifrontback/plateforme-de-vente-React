@@ -7,6 +7,9 @@ const port = 3000;
 //On récupère les paramètres de connection de la BDD
 const databaseCall = require("./connexionDB.json");
 const mysql = require("mysql"); //faire un npm install mysql dans le dossier du projet
+//Middleware cors
+const cors = require("cors");
+app.use(cors());
 //Appel de la base de donnée
 const database = mysql.createConnection(databaseCall); 
 app.use(express.json());

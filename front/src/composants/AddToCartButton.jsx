@@ -2,12 +2,10 @@ import * as React from 'react';
 import { Button, Center } from '@chakra-ui/react';
 
 function AddToCartButton() {
-    return (
-        <Center>
+    return (        
             <Button colorScheme='blue' variant='solid' size='md'>
-                Add To Cart
-            </Button>
-        </Center>
+                Ajouter au panier
+            </Button>       
     )
 }
 
