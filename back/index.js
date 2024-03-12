@@ -132,6 +132,16 @@ app.delete("/admin/:id", function (req, res) {
     "DELETE FROM Meubles WHERE id = ?",
     [id],
     (err, rows, fields) => {
+      if (err) {
+        console.log("erreur dans la requête", err);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      }
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+    }
+  );
+});
 // essai pour afficher les 6 cards de la page home
 
 app.get("/", function (req, res) { 
