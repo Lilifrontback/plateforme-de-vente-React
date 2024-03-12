@@ -67,7 +67,7 @@ function Home() {
             </CardBody>
             <Divider />
             <CardBody>
-              <Link to={`/product/${meuble.id}`}>
+              <Link to={`/basket/${meuble.id}`}>
                 <Button variant="solid" colorScheme="blue">
                   {/*Appeller le composant Bouton et linkto ajout panier*/}
                   Ajouter au panier
