@@ -7,6 +7,8 @@ function NavBar() {
   const { toggleColorMode } = useColorMode();
   const colorModeIcon = useColorModeValue(<FaMoon />, <FaSun />);
 
+//Rajouter écart entre les boutons de gauche
+
   return (
     <Box boxShadow="lg" bg="blue.500" px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -14,12 +16,12 @@ function NavBar() {
           <Flex alignItems="center">
             <Image src="../src/assets/images/logo.jpg" alt="Logo" h={8} mr={4} />
             <Link to="/">
-              <Button colorScheme="blue" variant="solid">
+              <Button colorScheme="blue" variant="solid" mr={4}>
                 Accueil
               </Button>
             </Link>
             <Link to="/connexion">
-              <Button colorScheme="blue" variant="solid">
+              <Button colorScheme="blue" variant="solid" mr={4}>
                 Connexion
               </Button>
             </Link>
