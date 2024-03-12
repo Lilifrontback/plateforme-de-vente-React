@@ -16,6 +16,22 @@ app.use(express.json());
 //connection à la base de donnée
 database.connect();
 
+app.get("/", function (req, res) { 
+  let limit = req.query.limit || 6 ; 
+  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles ORDER BY id DESC LIMIT ${limit}`;
+  database.query(query,  (err, rows) => {
+      if (err) {
+        console.log("erreur dans la requête", err);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      } else {
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+     }
+    });
+
+  })
+
 //Permet de lancer le serveur
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

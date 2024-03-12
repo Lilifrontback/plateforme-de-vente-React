@@ -7,7 +7,7 @@ import TechnicalSheetCard from './composants/TechnicalSheetCard';
 import AddToCartButton from './composants/AddToCartButton';
 import { Grid, Box, HStack, GridItem } from '@chakra-ui/react';
 
-import { meuble } from './Home'
+// import { meuble } from './Home'
 
 function Product() {
     // Récupérer les paramètres d'URL, y compris l'ID
