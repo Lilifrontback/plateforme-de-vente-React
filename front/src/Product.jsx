@@ -2,7 +2,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import PhotoCard from "./composants/PhotoCard";
-import DescriptionCard from "./composants/DescriptionCard";
 import TechnicalSheetCard from "./composants/TechnicalSheetCard";
 import AddToCartButton from "./composants/AddToCartButton";
 import { Grid, Box, HStack, GridItem, Text } from "@chakra-ui/react";
