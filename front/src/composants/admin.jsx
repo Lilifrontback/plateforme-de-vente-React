@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import fonctions tableau, bouton de la librairie chakra
 
-import fetchMeubles from '../services/apiService';
+import { fetchMeublesEnStock } from '../services/apiService';
 import {
   Table,
   Thead,
@@ -18,61 +18,19 @@ import {
 } from '@chakra-ui/react';
 
 //Import données meubles
-fetchMeubles()
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error))
-
+let meubles= await fetchMeublesEnStock()
+    .catch(error => console.error('Error:', error))
 
 function Admin() {
-  const exemples = [
-    {
-      nom: "canapé fantastique",
-      photos: "photo",
-      catégorie: "canapé",
-      description: "canap de compet",
-      matière: "cuir",
-      couleur: "noir",
-      enstock: "true",
-      acheteur: "acheteur",
-      prix: "100"
-    },
-    {
-      nom: "table élégante",
-      photos: "photo2",
-      catégorie: "table",
-      description: "table design",
-      matière: "bois",
-      couleur: "blanc",
-      enstock: "true",
-      acheteur: "acheteur2",
-      prix: "150"
-    }
-  ];
+  
   const categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
   const matières = ['mat 1', 'mat 2', 'mat 3'];
-
-
-
-  //   const handleAddItem = () => {
-  //   fetch('http://localhost:3000/meubles', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(formData),
-  //   },
-  //   console.log(formData))
-  //   .then(response => response.json())
-  //   .catch(error => {
-  //     console.error('Erreur lors de l\'ajout des données:', error);
-  //   });
-  // };
-  
-
+  console.log(meubles)
+  typeof(meubles)
 
      return (
 <TableContainer>
-  <Table variant='simple'>
+  <Table _css={{"table-layout":"fixed","width": '5%'}} variant='striped'>
     <TableCaption>inventaire</TableCaption>
     {/* nom des catégories */}
     <Thead>
@@ -118,21 +76,21 @@ function Admin() {
       {/* onClick={handleAddItem} à rajouter au bouton*/}
     ajouter</Button></Td>  
       </Tr>
-
-          {exemples.map((exemple, index) => ( //boucle qui parcourt l'objet
+          {meubles.map((meuble,index) => ( //boucle qui parcourt l'objet
             <Tr key={index}>
-              <Td>{exemple.nom}</Td>          
-              <Td>{exemple.photos}</Td>
-              <Td>{exemple.catégorie}</Td>
-              <Td>{exemple.description}</Td>
-              <Td>{exemple.matière}</Td>
-              <Td>{exemple.couleur}</Td>
-              <Td>{exemple.enstock}</Td>
-              <Td>{exemple.acheteur}</Td>
-              <Td>{exemple.prix}</Td>
+              <Td>{meuble.nom}</Td>          
+              <Td>{meuble.photo}</Td>
+              <Td>{meuble.categorie_id}</Td>
+              <Td>{meuble.descriptif}</Td>
+              <Td>{meuble.matiere_id}</Td>
+              <Td>{meuble.couleur_id}</Td>
+              <Td>{meuble.stock}</Td>
+              <Td>{meuble.acheteur_id}</Td>
+              <Td>{meuble.prix}</Td>
+             
               
               <Td> <Button colorScheme='teal' variant='ghost'>ajouter</Button></Td>
-              <Td><Button colorScheme='teal' variant='ghost'>modifier</Button></Td>
+              <Td> <Button colorScheme='teal' variant='ghost'>modifier</Button></Td>
               <Td> <Button colorScheme='teal' variant='ghost'>supprimer</Button></Td>
              
             </Tr>

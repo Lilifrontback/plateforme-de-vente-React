@@ -12,19 +12,19 @@ function NavBar() {
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Box>
           <Flex alignItems="center">
-            <Image src="../src/assets/images/logo.jpg" alt="Logo" h={8} mr={4} />
+            <Image src="../src/assets/images/logo.png" alt="Logo" h={10} mr={6} />
             <Link to="/">
-              <Button colorScheme="blue" variant="ghost">
+              <Button colorScheme="blue" variant="solid">
                 Accueil
               </Button>
             </Link>
             <Link to="/connexion">
-              <Button colorScheme="blue" variant="ghost">
+              <Button colorScheme="blue" variant="solid">
                 Connexion
               </Button>
             </Link>
             <Link to="/inscription">
-              <Button colorScheme="blue" variant="ghost">
+              <Button colorScheme="blue" variant="solid">
                 Inscription
               </Button>
             </Link>
