@@ -8,7 +8,9 @@ function TechnicalSheetCard({ product }) {
                 <Text fontWeight="bold" mb={2}>Caractéristiques :</Text>
                 <Text>Nom: {product.nom}</Text>
                 <Text>Prix: {product.prix}€</Text>
-                {/* Ajoutez d'autres caractéristiques ici */}
+                <Text>Matière: {product.matiere}</Text>
+                <Text>Couleur: {product.couleur}</Text>
+                <Text>Dimensions: {product.dimension}</Text>
             </Box>
         </Flex>
     );
