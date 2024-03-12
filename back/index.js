@@ -230,6 +230,45 @@ app.get("/searchbar", function (req, res) { //suppression /meuble pas de page me
 
 });
 
+app.get("/admin/matiere", function (req, res) {
+
+  database.query("SELECT Matieres.nom FROM Matieres", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
+app.get("/admin/couleur", function (req, res) {
+
+  database.query("SELECT Couleurs.nom FROM Couleurs", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
+app.get("/admin/categorie", function (req, res) {
+
+  database.query("SELECT Categories.nom FROM Categories", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
 //Route pour supprimer un meuble en fonction de son id (afin de ne PAS supprimer toute la table ;) )
 //Pour faire le test on a créé une chaise test dans la table afin de ne pas supprimer les données créées par Jean-Clément
 app.delete("/admin/:id", function (req, res) {
@@ -302,7 +341,8 @@ app.get("/meubles", function (req, res) {
 
 //SESSIONS : 
 
-//body-parser : permet de récupérer les infos dans le json. extended: true pour permettre tous les types de valeur, false: string ou array
+//body-parser : permet de récupérer les infos dans le json. extended: true pour permettre tous les types de valeur, 
+//false: string ou array
 app.use(express.urlencoded({ extended: true }));
 //Utilisation de middleware session
 app.use(session({
@@ -314,6 +354,40 @@ app.use(session({
     saveUninitialized: false
   })
 );
+app.post('/inscription', (req, res) => {
+  const { password, username } = req.body;
+  req.session.user = { username };
+  let addPassword = `INSERT INTO Motdepasse (hash) VALUES (?)`;
+
+  let addUser =  `INSERT INTO Utilisateurs (nom, motdepasse_id) SELECT nom, id FROM Utilisateurs INNER JOIN Motdepasse ON Utilisateurs.motdepasse_id = Motdepasse.id`;
+
+  database.query(addPassword, [password], (err, result) => {
+    if (err) {
+      // Gérer les erreurs liées à l'insertion du mot de passe
+      res.status(500).send("Erreur lors de l'insertion du mot de passe");
+    } else {
+      let motdepasse_id = result.insertId;
+      database.query(addUser, [username, motdepasse_id], (err, result) => {
+        if (err) {
+          // Gérer les erreurs liées à l'insertion de l'utilisateur
+          res.status(500).send("Erreur lors de l'insertion de l'utilisateur");
+        } else {
+          res.redirect('/login');
+        }
+      });
+    }
+  });
+});
+
+app.get('/login', (req, res) => {
+  if (req.session.user) {
+    // User is authenticated, render dashboard
+    res.render('login')
+  } else {
+    // User is not authenticated, redirect to login page
+    res.redirect('/inscription')
+  }
+})
 
 //Vérifier la session du panier
 app.use((req, res, next) => {
