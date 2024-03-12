@@ -48,14 +48,12 @@ function Home() {
         {filteredMeubles.map((meuble) => (
           <Card key={meuble.id} maxW="xs">
             <CardBody>
-              <Image src={meuble.photo} alt={meuble.nom} borderRadius="lg" />
+              <Image src={meuble.photo} alt={meuble.nom} borderRadius='lg' boxSize="300px" objectFit="cover" />
               <Stack mt="6" spacing="3">
-                {/* Inclure l'ID de l'article dans l'URL */}
                 <Link to={`/product/${meuble.id}`}>
                   <Heading size="md">{meuble.nom}</Heading>
                 </Link>
                 <Text>
-                  {/*Description à rendre dynamique avec les données*/}
                   {meuble.descriptif}
                 </Text>
                 <Text color="blue.600" fontSize="2xl" ml="auto">

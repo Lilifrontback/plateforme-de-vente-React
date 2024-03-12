@@ -2,10 +2,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import PhotoCard from "./composants/PhotoCard";
-import DescriptionCard from "./composants/DescriptionCard";
 import TechnicalSheetCard from "./composants/TechnicalSheetCard";
 import AddToCartButton from "./composants/AddToCartButton";
-import { Grid, Box, HStack, GridItem } from "@chakra-ui/react";
+import { Grid, Box, HStack, GridItem, Text } from "@chakra-ui/react";
 
 import { meubles } from "./Home";
 
@@ -30,8 +29,8 @@ function Product() {
 
       <GridItem rowSpan={3} colSpan={1}>
         <HStack>
-          <Box>
-            <PhotoCard image={product.image} />
+          <Box >
+            <PhotoCard image={product.photo} />
           </Box>
         </HStack>
       </GridItem>
@@ -45,7 +44,7 @@ function Product() {
       </GridItem>
 
       <GridItem colSpan={2} mt={2}>
-        <DescriptionCard description={product.description} />
+        <Text>{product.descriptif} </Text>
       </GridItem>
 
       <GridItem colSpan={2} mt={2}>
