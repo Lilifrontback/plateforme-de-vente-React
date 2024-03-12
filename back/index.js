@@ -167,7 +167,7 @@ app.get("/searchbar", function (req, res) { //suppression /meuble pas de page me
 //On gère le cas où aucun paramètre n'a été passé dans l'url de la requete (pas de filtre)
   if (couleur === undefined && categorie === undefined && matiere === undefined && id === undefined && prix === undefined && stock === undefined){
 
-    database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
+    database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
       if (err) {
         console.log("erreur dans la requête", err);
         res.status(500).send("erreur interne du serveur");
