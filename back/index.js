@@ -20,7 +20,7 @@ app.listen(port, () => {
 
 
 //route pour Ajouter un meuble
-app.post("/meubles",(req,res) => {
+app.post("/admin",(req,res) => {
   let meubleAjoute
   console.log(req.body) //ça pourra changer en fonction du formulaire créé en front
   meubleAjoute=req.body
@@ -37,20 +37,60 @@ app.post("/meubles",(req,res) => {
   //envoie de la requête
   database.query(addMeubles,[meubleAjoute.nom,meubleAjoute.categorie_id,meubleAjoute.descriptif,meubleAjoute.prix,meubleAjoute.dimension, meubleAjoute.vendeur_id,meubleAjoute.acheteur_id,meubleAjoute.matiere_id,meubleAjoute.photo,meubleAjoute.couleur_id,meubleAjoute.stock])
   res.status(201).json({
-    message: 'Objet créé !'
+    message: 'Objet créé !' 
+    
+    
+  });
+});
+
+//route pour Ajouter un utilisateur et mot de passenpm start
+
+app.post("/utilisateurs",(req,res) => {
+  let utilisateurAjoute = req.body;
+
+  // Création de la requête SQL pour insérer le mot de passe dans la table Motdepasse
+  let addMotDePasse = `INSERT INTO Motdepasse (hash) VALUES (?)`;
+  // Envoi de la requête pour insérer le mot de passe
+  database.query(addMotDePasse, [utilisateurAjoute.motdepasse], (err, result) => {
+  // Récupérer l'ID du mot de passe inséré
+  const motdepasseId = result.insertId;
+  // Création de la requête SQL pour insérer l'utilisateur dans la table Utilisateurs
+  let addUtilisateur= `INSERT INTO Utilisateurs (nom, mail, motdepasse_id, telephone) VALUES (?, ?, ?, ?)`;
+  // Envoi de la requête pour insérer l'utilisateur
+    database.query(addUtilisateur, [utilisateurAjoute.nom, utilisateurAjoute.mail, motdepasseId, utilisateurAjoute.telephone], (err, result) => {
+    console.log("Utilisateur ajouté avec succès.");
+    res.status(201).json({ message: "Utilisateur ajouté avec succès.", motdepasse_id: motdepasseId });
+      
+    });
   });
 });
 
 
-//modification des paramètres d'un meuble. /!\ seulement fait pour couleur_id mais possible de le faire pour tous
+
+
+
+
+//modification des paramètres d'un meuble. 
 app.put("/meubles/:id", (req, res) =>{
   const recup = (req.body) // Récupération des données du form en format Json
   const id = parseInt(req.params.id) //Récupération de l'id via la route
-  const couleurId = recup.couleur_id
-  console.log("couleurId recupéré : ",couleurId)
-  console.log("ID Récupéré: ",id)
-  let paramQuery=[couleurId,id] //Bien mettre les paramètres dans ce tableau dans l'ordre des points d'interrogation de la requête
-  database.query("UPDATE Meubles SET couleur_id = ? WHERE id = ?",paramQuery,(err, result) => {
+  
+  const nom = recup.nom
+  const categorie_id = recup.categorie_id
+  const descriptif = recup.descriptif
+  const prix = recup.prix
+  const dimension = recup.dimension
+  const vendeur_id = recup.vendeur_id
+  const acheteur_id = recup.acheteur_id
+  const matiere_id = recup.matiere_id
+  const couleur_id = recup.couleur_id
+  
+  //console.log("categorieId : ",categorieId)
+  console.log("couleurId : ",couleur_id)
+  console.log("ID : ",id)
+  
+  let paramQuery=[nom,categorie_id,descriptif,prix,dimension,vendeur_id,acheteur_id,matiere_id,couleur_id,id] //Bien mettre les paramètres dans ce tableau dans l'ordre des points d'interrogation de la requête
+  database.query("UPDATE Meubles SET  nom = ?, categorie_id = ?, descriptif = ?, prix = ?, dimension = ?, vendeur_id = ?, acheteur_id = ?, matiere_id = ?, couleur_id = ?  WHERE id = ?",paramQuery,(err, result) => {
     if(err){
       res.json({
         status:400,
@@ -67,13 +107,45 @@ app.put("/meubles/:id", (req, res) =>{
   });
 })
 
+// essai pour afficher les 6 cards de la page home
+
+app.get("/", function (req, res) { 
+  let limit = req.query.limit || 6 ; 
+  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles LIMIT ${limit}`;
+  database.query(query,  (err, rows) => {
+      if (err) {
+        console.log("erreur dans la requête", err);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      } else {
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+     }
+    });
+
+  })
+
+  //essai afficher la page product (détail)
+  app.get("/product/:id", function (req, res) { 
+  const productId = req.params.id; // Récupérer l'ID du produit à partir des paramètres de l'URL
+
+  database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Meubles.dimension, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Meubles.id = ?", [productId], (err, rows, fields) => {
+    if (err) {
+      console.log("Erreur dans la requête", err);
+      res.status(500).send("Erreur interne du serveur");
+      return;
+    }
+    console.log("Résultat de la requête :", rows);
+    res.json(rows);
+  });
+});
 
 //Route get pour récupérer les meubles de la BDD
 //Des paramètres peuvent être passés dans l'url de la requête coté front pour filtrer les meubles par couleur, catégorie, matière
 //TODO, modifier cette route pour lui permettre de prendre en compte plusieurs filtres en meme temps (ex: je veux des chaises rouges en velours)
 //TODO, une fois le cumul de filtres possible, ajouter notamment le filtre stock = 1 
 
-app.get("/meubles", function (req, res) {
+app.get("/searchbar", function (req, res) { //suppression /meuble pas de page meuble >> Lise
 
 // On récupère dans des variables les paramètres potentiellement passés dans l'url de la requete
   console.log(req.query)
@@ -81,6 +153,8 @@ app.get("/meubles", function (req, res) {
   let categorie = req.query.categorie;
   let matiere = req.query.matiere;
   let id = req.query.id;
+  let prix = req.query.prix;
+  let stock = req.query.stock;
 
   console.log("couleur : ",couleur)
   console.log("catégorie : ",categorie)
@@ -88,9 +162,9 @@ app.get("/meubles", function (req, res) {
   console.log("id : ",id)
 
 //On gère le cas où aucun paramètre n'a été passé dans l'url de la requete (pas de filtre)
-  if (couleur === undefined && categorie === undefined && matiere === undefined && id === undefined){
+  if (couleur === undefined && categorie === undefined && matiere === undefined && id === undefined && prix === undefined && stock === undefined){
 
-    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
+    database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles", (err, rows, fields) => {
       if (err) {
         console.log("erreur dans la requête", err);
         res.status(500).send("erreur interne du serveur");
@@ -153,13 +227,77 @@ app.get("/meubles", function (req, res) {
       res.json(rows);
   
     });
+  }   else if (prix != undefined) {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles WHERE id = ?",[prix],(err, rows, fields) => {
+      if (err) {
+        console.log("Le meuble n'a pas été trouvé",err.message);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      }
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+  
+    });
   }
+  else if (stock != undefined) {
+    database.query("SELECT Meubles.nom, Meubles.descriptif,Meubles.photo, Meubles.prix FROM Meubles WHERE id = ?",[stock],(err, rows, fields) => {
+      if (err) {
+        console.log("Le meuble n'a pas été trouvé",err.message);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      }
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+  
+    });
+  }
+
+
 
 });
 
+app.get("/admin/matiere", function (req, res) {
+
+  database.query("SELECT Matieres.nom FROM Matieres", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
+app.get("/admin/couleur", function (req, res) {
+
+  database.query("SELECT Couleurs.nom FROM Couleurs", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
+app.get("/admin/categorie", function (req, res) {
+
+  database.query("SELECT Categories.nom FROM Categories", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
 //Route pour supprimer un meuble en fonction de son id (afin de ne PAS supprimer toute la table ;) )
 //Pour faire le test on a créé une chaise test dans la table afin de ne pas supprimer les données créées par Jean-Clément
-app.delete("/meubles/:id", function (req, res) {
+app.delete("/admin/:id", function (req, res) {
   const id = parseInt(req.params.id);
   console.log("ID Récupéré : ", id);
   database.query(
@@ -214,11 +352,23 @@ app.get("/meublesenstock/:id",  (req, res) => {
 //Route GET commande (pour affichage panier)
 //Et plus si affinités!!
 
+app.get("/meubles", function (req, res) {
+  database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id", (err, rows, fields) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+});
 
 
 //SESSIONS : 
 
-//body-parser : permet de récupérer les infos dans le json. extended: true pour permettre tous les types de valeur, false: string ou array
+//body-parser : permet de récupérer les infos dans le json. extended: true pour permettre tous les types de valeur, 
+//false: string ou array
 app.use(express.urlencoded({ extended: true }));
 //Utilisation de middleware session
 app.use(session({
@@ -230,6 +380,40 @@ app.use(session({
     saveUninitialized: false
   })
 );
+app.post('/inscription', (req, res) => {
+  const { password, username } = req.body;
+  req.session.user = { username };
+  let addPassword = `INSERT INTO Motdepasse (hash) VALUES (?)`;
+
+  let addUser =  `INSERT INTO Utilisateurs (nom, motdepasse_id) SELECT nom, id FROM Utilisateurs INNER JOIN Motdepasse ON Utilisateurs.motdepasse_id = Motdepasse.id`;
+
+  database.query(addPassword, [password], (err, result) => {
+    if (err) {
+      // Gérer les erreurs liées à l'insertion du mot de passe
+      res.status(500).send("Erreur lors de l'insertion du mot de passe");
+    } else {
+      let motdepasse_id = result.insertId;
+      database.query(addUser, [username, motdepasse_id], (err, result) => {
+        if (err) {
+          // Gérer les erreurs liées à l'insertion de l'utilisateur
+          res.status(500).send("Erreur lors de l'insertion de l'utilisateur");
+        } else {
+          res.redirect('/login');
+        }
+      });
+    }
+  });
+});
+
+app.get('/login', (req, res) => {
+  if (req.session.user) {
+    // User is authenticated, render dashboard
+    res.render('login')
+  } else {
+    // User is not authenticated, redirect to login page
+    res.redirect('/inscription')
+  }
+})
 
 //Vérifier la session du panier
 app.use((req, res, next) => {
@@ -255,3 +439,6 @@ app.post('/', (req, res) => {
   req.session.panier[req.query.name] = req.body.qty;
   res.redirect('/')
 });
+
+
+
