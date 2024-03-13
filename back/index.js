@@ -17,8 +17,11 @@ app.use(express.json());
 database.connect();
 
 app.get("/", function (req, res) { 
-  let limit = req.query.limit || 6 ; 
-  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles ORDER BY id DESC LIMIT ${limit}`;
+  let page = req.query.page || 1;
+  let limit = req.query.limit || 6;
+  let offset = (page - 1) * limit;
+ 
+  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles ORDER BY id DESC LIMIT ${limit} OFFSET ${offset}`;
   database.query(query,  (err, rows) => {
       if (err) {
         console.log("erreur dans la requête", err);
@@ -57,6 +60,18 @@ app.post("/meubles",(req,res) => {
   database.query(addMeubles,[meubleAjoute.nom,meubleAjoute.categorie_id,meubleAjoute.descriptif,meubleAjoute.prix,meubleAjoute.dimension, meubleAjoute.vendeur_id,meubleAjoute.acheteur_id,meubleAjoute.matiere_id,meubleAjoute.photo,meubleAjoute.couleur_id,meubleAjoute.stock])
   res.status(201).json({
     message: 'Objet créé !'
+  });
+});
+
+app.get("/meublesCount", function (req, res) {
+  database.query("SELECT COUNT(*) AS total FROM Meubles", (err, result) => {
+    if (err) {
+      console.log("Erreur lors de la récupération du nombre total de meubles :", err);
+      res.status(500).send("Erreur interne du serveur");
+      return;
+    }
+    const totalCount = result[0].total;
+    res.json({ total: totalCount });
   });
 });
 
