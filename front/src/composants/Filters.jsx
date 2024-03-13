@@ -5,8 +5,7 @@ import { Button } from '@chakra-ui/react';
 //Filtres prend deux propriétés en param : liste de filtre, et un callback qd le filtre est sélectionné
 function Filtres ({ filters, onSelectFilter, filterType, selectedFilter }) {
 
-// //On garde en mémoire avec useSate le filtre sélectionné 
-// const [selectedFilter, setSelectedFilter] = useState(null);
+
 
 //On crée une fonction gérerFiltreChoisi qui appelle onSelectFilter sur le filtre choisi
 function gererFiltreChoisi (fitreChoisi) {
@@ -17,11 +16,11 @@ function gererFiltreChoisi (fitreChoisi) {
 let defaultLabel = '';
 if (selectedFilter === null || selectedFilter === 'Aucun') {
   if (filterType === 'categorie') {
-    defaultLabel = 'Filtrer: Catégorie';
+    defaultLabel = 'Catégorie';
   } else if (filterType === 'couleur') {
-    defaultLabel = 'Filtrer: Couleur';
+    defaultLabel = 'Couleur';
   } else if (filterType === 'matiere') {
-    defaultLabel = 'Filtrer: Matière';
+    defaultLabel = 'Matière';
   }
 } else {
   defaultLabel = selectedFilter;
@@ -30,7 +29,7 @@ if (selectedFilter === null || selectedFilter === 'Aucun') {
 //On retourne le bouton
   return (
     <Menu>
-      <MenuButton as={Button}> {defaultLabel}</MenuButton>
+      <MenuButton as={Button} mr={4}> {defaultLabel}</MenuButton>
       <MenuList>
       <MenuItem key="Aucun" onClick={() => gererFiltreChoisi("Aucun")}>
           Aucun
