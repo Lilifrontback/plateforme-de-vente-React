@@ -27,7 +27,7 @@ function Home() {
 //On choisit les listes de filtres. Ces listes doivent correspondre à la BDD 
   const filtreParCouleur = ['Chêne clair','Vert','bleu nuit', 'Beige', 'Rouge', 'Doré', 'Chêne foncé', 'Gris', 'Acajou', 'Noir']
   const filtreParCategorie = ['Chaise', 'Table', 'Lit', 'Canapé', 'Fauteuil', 'Cathèdre', 'Vaisselier', 'Armoire', 'Dressoir', 'Cabinet', 'Commode'];
-  const filtreParMatiere = ['Bois', 'Cuir', 'Velour', 'Verre', 'Plastique', 'Pierre', 'Rotin', 'Tissu'];
+  const filtreParMatiere = ['Bois', 'Cuir', 'Velours', 'Verre', 'Plastique', 'Pierre', 'Rotin', 'Tissu'];
 
 //On place un useState pour écouter la liste de meubles filtrés qui sera mise à jour selon filtres appliqués
   const [filteredMeubles, setFilteredMeubles] = useState(meubles);
