@@ -45,7 +45,6 @@ Collaboration between the two teams was essential to ensure the project's succes
 2. To link your database to the project, create a file named 'connexionDB.json' in the 'back' folder and fill it with your informations, following this model :
 
     `{
-
     "host": "Tape here the url of your database...",
     "user": "Tape here your user name...",
     "password": "Tape here your password...",
