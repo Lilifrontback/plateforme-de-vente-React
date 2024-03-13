@@ -22,6 +22,45 @@ app.listen(port, () => {
 });
 
 
+//PAGE HOME
+
+// afficher les 6 cards de la page home
+
+app.get("/", function (req, res) { 
+  let limit = req.query.limit || 6 ; 
+  let query = `SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix FROM Meubles LIMIT ${limit}`;
+  database.query(query,  (err, rows) => {
+      if (err) {
+        console.log("erreur dans la requête", err);
+        res.status(500).send("erreur interne du serveur");
+        return;
+      } else {
+      console.log("Resultat de la requête:", rows);
+      res.json(rows);
+     }
+    });
+
+  })
+
+    // PAGE PRODUCT
+
+    //afficher la page product (détail)
+    app.get("/product/:id", function (req, res) { 
+      const productId = req.params.id; // Récupérer l'ID du produit à partir des paramètres de l'URL
+    
+      database.query("SELECT Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Meubles.dimension, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id WHERE Meubles.id = ?", [productId], (err, rows, fields) => {
+        if (err) {
+          console.log("Erreur dans la requête", err);
+          res.status(500).send("Erreur interne du serveur");
+          return;
+        }
+        console.log("Résultat de la requête :", rows);
+        res.json(rows);
+      });
+    });
+
+//PAGE ADMIN
+
 //route pour Ajouter un meuble
 app.post("/admin",(req,res) => {
   let meubleAjoute
@@ -110,7 +149,7 @@ app.put("/meubles/:id", (req, res) =>{
   });
 })
 
-// essai pour afficher les 6 cards de la page home
+// afficher les 6 cards de la page home
 
 app.get("/", function (req, res) { 
   let limit = req.query.limit || 6 ; 
@@ -141,7 +180,24 @@ app.get("/", function (req, res) {
     console.log("Résultat de la requête :", rows);
     res.json(rows);
   });
-});
+})
+
+app.get("/admin/categorie", function (req, res) {
+
+  database.query("SELECT Categories.nom, Categories.id FROM Categories", (err, rows) => {
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
+})
+
+// PANIER
+
+//ajouter un meuble au panier
 
 //Route get pour récupérer les meubles de la BDD
 //Des paramètres peuvent être passés dans l'url de la requête coté front pour filtrer les meubles par couleur, catégorie, matière
@@ -259,69 +315,14 @@ app.get("/searchbar", function (req, res) { //suppression /meuble pas de page me
 
 });
 
-app.get("/admin/matiere", function (req, res) {
 
-  database.query("SELECT Matieres.nom FROM Matieres", (err, rows) => {
-    if (err) {
-      console.log("erreur dans la requête", err);
-      res.status(500).send("erreur interne du serveur");
-      return;
-    }
-    console.log("Resultat de la requête:", rows);
-    res.json(rows);
-  });
-})
-
-app.get("/admin/couleur", function (req, res) {
-
-  database.query("SELECT Couleurs.nom FROM Couleurs", (err, rows) => {
-    if (err) {
-      console.log("erreur dans la requête", err);
-      res.status(500).send("erreur interne du serveur");
-      return;
-    }
-    console.log("Resultat de la requête:", rows);
-    res.json(rows);
-  });
-})
-
-app.get("/admin/categorie", function (req, res) {
-
-  database.query("SELECT Categories.nom FROM Categories", (err, rows) => {
-    if (err) {
-      console.log("erreur dans la requête", err);
-      res.status(500).send("erreur interne du serveur");
-      return;
-    }
-    console.log("Resultat de la requête:", rows);
-    res.json(rows);
-  });
-})
-
-//Route pour supprimer un meuble en fonction de son id (afin de ne PAS supprimer toute la table ;) )
-//Pour faire le test on a créé une chaise test dans la table afin de ne pas supprimer les données créées par Jean-Clément
-app.delete("/admin/:id", function (req, res) {
-  const id = parseInt(req.params.id);
-  console.log("ID Récupéré : ", id);
-  database.query(
-    "DELETE FROM Meubles WHERE id = ?",
-    [id],
-    (err, rows, fields) => {
-      if (err) {
-        console.log("erreur dans la requête", err);
-        res.status(500).send("erreur interne du serveur");
-        return;
-      }
-      console.log("Resultat de la requête:", rows);
-      res.json(rows);
-    }
-  );
-});
 
 // Route get récupérer meubles where en stock = true. 
 //TODO: Sera à fusionner avec la route GET globale une fois qu'elle pourra cumuler plusieurs paramètres
 app.get("/meublesenstock", function (req, res) {
-  database.query("SELECT * FROM Meubles WHERE stock = 1", (err, rows, fields) => {
+  //database.query("SELECT * FROM Meubles WHERE stock = 1", (err, rows, fields) => {
+    database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock,Meubles.dimension, Meubles.acheteur_id,  Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id",
+    (err, rows, fields) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
@@ -370,6 +371,30 @@ app.get("/meubles", function (req, res) {
 
 //SESSIONS : 
 
+//route pour Ajouter un utilisateur et mot de passenpm start
+
+app.post("/utilisateurs",(req,res) => {
+  let utilisateurAjoute = req.body;
+
+  // Création de la requête SQL pour insérer le mot de passe dans la table Motdepasse
+  let addMotDePasse = `INSERT INTO Motdepasse (hash) VALUES (?)`;
+  // Envoi de la requête pour insérer le mot de passe
+  database.query(addMotDePasse, [utilisateurAjoute.motdepasse], (err, result) => {
+  // Récupérer l'ID du mot de passe inséré
+  const motdepasseId = result.insertId;
+  // Création de la requête SQL pour insérer l'utilisateur dans la table Utilisateurs
+  let addUtilisateur= `INSERT INTO Utilisateurs (nom, mail, motdepasse_id, telephone) VALUES (?, ?, ?, ?)`;
+  // Envoi de la requête pour insérer l'utilisateur
+    database.query(addUtilisateur, [utilisateurAjoute.nom, utilisateurAjoute.mail, motdepasseId, utilisateurAjoute.telephone], (err, result) => {
+    console.log("Utilisateur ajouté avec succès.");
+    res.status(201).json({ message: "Utilisateur ajouté avec succès.", motdepasse_id: motdepasseId });
+    res.redirect('/')
+      
+    });
+  });
+});
+
+
 //body-parser : permet de récupérer les infos dans le json. extended: true pour permettre tous les types de valeur, 
 //false: string ou array
 app.use(express.urlencoded({ extended: true }));
@@ -383,30 +408,7 @@ app.use(session({
     saveUninitialized: false
   })
 );
-app.post('/inscription', (req, res) => {
-  const { password, username } = req.body;
-  req.session.user = { username };
-  let addPassword = `INSERT INTO Motdepasse (hash) VALUES (?)`;
 
-  let addUser =  `INSERT INTO Utilisateurs (nom, motdepasse_id) SELECT nom, id FROM Utilisateurs INNER JOIN Motdepasse ON Utilisateurs.motdepasse_id = Motdepasse.id`;
-
-  database.query(addPassword, [password], (err, result) => {
-    if (err) {
-      // Gérer les erreurs liées à l'insertion du mot de passe
-      res.status(500).send("Erreur lors de l'insertion du mot de passe");
-    } else {
-      let motdepasse_id = result.insertId;
-      database.query(addUser, [username, motdepasse_id], (err, result) => {
-        if (err) {
-          // Gérer les erreurs liées à l'insertion de l'utilisateur
-          res.status(500).send("Erreur lors de l'insertion de l'utilisateur");
-        } else {
-          res.redirect('/login');
-        }
-      });
-    }
-  });
-});
 
 app.get('/login', (req, res) => {
   if (req.session.user) {
@@ -437,9 +439,21 @@ app.get('/panier', (req, res) => {
 
 //Requête d'envoi dans le panier
 //TODO rajouter ici requête pour envoyer l'article dans la table commande
-app.post('/', (req, res) => { 
+app.post('/ajoutpanier', (req, res) => { 
   //Envoyer au panier et rester sur la page
   req.session.panier[req.query.name] = req.body.qty;
+  let meubleid = req.body.meuble_id
+  let requete = `INSERT INTO Commandes (paye, session, meuble_id) VALUES (?, ?, ?)`
+
+database.query(requete [req.session.panier][meubleid], (err, rows, fields) => { 
+    if (err) {
+      console.log("erreur dans la requête", err);
+      res.status(500).send("erreur interne du serveur");
+      return;
+    }
+    console.log("Resultat de la requête:", rows);
+    res.json(rows);
+  });
   res.redirect('/')
 });
 
