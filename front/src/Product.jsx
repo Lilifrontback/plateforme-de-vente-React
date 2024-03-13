@@ -5,8 +5,12 @@ import PhotoCard from "./composants/PhotoCard";
 import TechnicalSheetCard from "./composants/TechnicalSheetCard";
 import AddToCartButton from "./composants/AddToCartButton";
 import { Grid, Box, HStack, GridItem, Text } from "@chakra-ui/react";
+import {fetchMeubles} from "./services/apiService";
 
-import { meubles } from "./Home";
+//Import données 
+const meubles = await fetchMeubles().catch((error) =>
+  console.error("Error:", error)
+);
 
 function Product() {
   // Récupérer les paramètres d'URL, y compris l'ID

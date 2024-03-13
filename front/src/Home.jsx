@@ -9,9 +9,11 @@ import { SimpleGrid } from "@chakra-ui/react";
 
 //Import données 
 import {fetchMeubles} from "./services/apiService.jsx";
+import { fetchMeublesFiltres } from './services/apiService.jsx';
 
-// On export la constante pour la récupérer dans d'autres pages @todo : changer ce raisonnement
-export const meubles = await fetchMeubles().catch((error) =>
+
+// On crée la constante meubles sur laquelle itérer
+const meubles = await fetchMeubles().catch((error) =>
   console.error("Error:", error)
 );
 
