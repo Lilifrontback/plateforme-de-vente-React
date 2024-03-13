@@ -15,6 +15,7 @@ function gererFiltreChoisi (fitreChoisi) {
 // Déterminer la valeur par défaut en fonction du type de filtre (pour MAJ le bouton)
 let defaultLabel = '';
 if (selectedFilter === null || selectedFilter === 'Aucun') {
+  
   if (filterType === 'categorie') {
     defaultLabel = 'Catégorie';
   } else if (filterType === 'couleur') {

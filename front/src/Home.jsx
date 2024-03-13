@@ -74,15 +74,35 @@ function Home() {
         setSelectedCategorieFilter(
           filtreChoisi === "Aucun" ? null : filtreChoisi
         );
+        setSelectedCouleurFilter(
+          null
+        );
+        setSelectedMatiereFilter(
+          null
+        );
         break;
+        
       case "couleur":
         setSelectedCouleurFilter(
           filtreChoisi === "Aucun" ? null : filtreChoisi
         );
+        setSelectedCategorieFilter(
+          null
+        );
+        setSelectedMatiereFilter(
+          null
+        );
         break;
+
       case "matiere":
         setSelectedMatiereFilter(
           filtreChoisi === "Aucun" ? null : filtreChoisi
+        );
+        setSelectedCategorieFilter(
+          null
+        );
+        setSelectedCouleurFilter(
+          null
         );
         break;
       default:
