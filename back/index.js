@@ -64,26 +64,27 @@ app.get("/", function (req, res) {
 //route pour Ajouter un meuble
 app.post("/admin",(req,res) => {
   let meubleAjoute
-  console.log(req.body) //ça pourra changer en fonction du formulaire créé en front
+  // console.log(req.body) //ça pourra changer en fonction du formulaire créé en front
   meubleAjoute=req.body
-  console.log(meubleAjoute.nom)
+  console.log(meubleAjoute)
+  console.log(meubleAjoute[0].nom)
   //création de la requête
-  let addMeubles = `INSERT INTO Meubles 
-  (
-      nom, categorie_id, descriptif, prix, dimension, vendeur_id, acheteur_id, matiere_id, photo, couleur_id, stock
-  )
-  VALUES
-  (
-      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? 
-  )`; // Les ? seront remplacés par les valeurs à ajouter Attention à bien mettre les variables à ajouter dans le même ordre que la liste ci-dessus
-  //envoie de la requête
-  database.query(addMeubles,[meubleAjoute.nom,meubleAjoute.categorie_id,meubleAjoute.descriptif,meubleAjoute.prix,meubleAjoute.dimension, meubleAjoute.vendeur_id,meubleAjoute.acheteur_id,meubleAjoute.matiere_id,meubleAjoute.photo,meubleAjoute.couleur_id,meubleAjoute.stock])
-  res.status(201).json({
-    message: 'Objet créé !' 
+    let addMeubles = `INSERT INTO Meubles 
+    (
+        nom, categorie_id, descriptif, prix, dimension, vendeur_id, acheteur_id, matiere_id, photo, couleur_id, stock
+    )
+    VALUES
+    (
+        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? 
+    )`; // Les ? seront remplacés par les valeurs à ajouter Attention à bien mettre les variables à ajouter dans le même ordre que la liste ci-dessus
+    //envoie de la requête
+     database.query(addMeubles,[meubleAjoute[0].nom,meubleAjoute[1].categorie_id,meubleAjoute[2].descriptif,meubleAjoute[3].prix,meubleAjoute[8].dimension, meubleAjoute[9].vendeur_id,meubleAjoute[10].acheteur_id,meubleAjoute[4].matiere_id,meubleAjoute[5].photo,meubleAjoute[6].couleur_id,meubleAjoute[7].stock])
+     res.status(201).json({
+     message: 'Objet créé !' 
     
     
-  });
-});
+   });
+ });
 
 
 //modification des paramètres d'un meuble
@@ -163,7 +164,7 @@ app.get("/", function (req, res) {
 // Menu déroulant de la page admin
 app.get("/admin/matiere", function (req, res) {
 
-  database.query("SELECT Matieres.nom FROM Matieres", (err, rows) => {
+  database.query("SELECT Matieres.nom, Matieres.id FROM Matieres", (err, rows) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
@@ -176,7 +177,7 @@ app.get("/admin/matiere", function (req, res) {
 
 app.get("/admin/couleur", function (req, res) {
 
-  database.query("SELECT Couleurs.nom FROM Couleurs", (err, rows) => {
+  database.query("SELECT Couleurs.nom, Couleurs.id FROM Couleurs", (err, rows) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
@@ -189,7 +190,7 @@ app.get("/admin/couleur", function (req, res) {
 
 app.get("/admin/categorie", function (req, res) {
 
-  database.query("SELECT Categories.nom FROM Categories", (err, rows) => {
+  database.query("SELECT Categories.nom, Categories.id FROM Categories", (err, rows) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
@@ -323,7 +324,9 @@ app.get("/searchbar", function (req, res) { //suppression /meuble pas de page me
 // Route get récupérer meubles where en stock = true. 
 //TODO: Sera à fusionner avec la route GET globale une fois qu'elle pourra cumuler plusieurs paramètres
 app.get("/meublesenstock", function (req, res) {
-  database.query("SELECT * FROM Meubles WHERE stock = 1", (err, rows, fields) => {
+  //database.query("SELECT * FROM Meubles WHERE stock = 1", (err, rows, fields) => {
+    database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock,Meubles.dimension, Meubles.acheteur_id,  Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id",
+    (err, rows, fields) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
