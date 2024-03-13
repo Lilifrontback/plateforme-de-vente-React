@@ -29,7 +29,7 @@ if (selectedFilter === null || selectedFilter === 'Aucun') {
 //On retourne le bouton
   return (
     <Menu>
-      <MenuButton as={Button}> {defaultLabel}</MenuButton>
+      <MenuButton as={Button} mr={4}> {defaultLabel}</MenuButton>
       <MenuList>
       <MenuItem key="Aucun" onClick={() => gererFiltreChoisi("Aucun")}>
           Aucun

@@ -12,11 +12,12 @@ import {fetchMeubles} from "./services/apiService.jsx";
 import { fetchMeublesFiltres } from './services/apiService.jsx';
 
 
-// On crée la constante meubles sur laquelle itérer
+// On crée les constantes meubles et meubles filtrés sur lesquelle itérer
 const meubles = await fetchMeubles().catch((error) =>
   console.error("Error:", error)
 );
 
+const meublesParCouleur = fetchMeublesFiltres()
 //On met des useState pour écouter quel filtre est sélectionné
 function Home() {
   const [selectedCategorieFilter, setSelectedCategorieFilter] = useState(null);
