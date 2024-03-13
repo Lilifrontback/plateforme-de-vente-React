@@ -11,7 +11,7 @@ import NavBar from './composants/NavBar';
 import Connexion from './composants/Connexion.jsx'
 import Footer from './composants/Footer.jsx'
 import Admin from './Admin.jsx'
-
+import Inscription from './composants/Inscription.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
@@ -24,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           {/* Path = '/"exemple"' -> permet d'accder à la page correspondante voir <Link> page Home */}
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/inscription" element={<Inscription />} />
         </Routes>
       </Router>
       <Footer />
