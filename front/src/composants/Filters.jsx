@@ -3,7 +3,7 @@ import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 
 //Filtres prend deux propriétés en param : liste de filtre, et un callback qd le filtre est sélectionné
-function Filtres ({ filters, onSelectFilter, filterType, selectedFilter }) {
+function Filtres ({ defaultColor, filters, onSelectFilter, filterType, selectedFilter }) {
 
 
 
@@ -30,7 +30,7 @@ if (selectedFilter === null || selectedFilter === 'Aucun') {
 //On retourne le bouton
   return (
     <Menu>
-      <MenuButton bg='#254356' color="white" variant='solid' _hover={{bg:'#355B74'}} as={Button}> {defaultLabel} </MenuButton>
+      <MenuButton bg={defaultColor} color="white" variant='solid' _hover={{bg:'#355B74'}} as={Button}> {defaultLabel} </MenuButton>
       <MenuList>
       <MenuItem key="Aucun" onClick={() => gererFiltreChoisi("Aucun")}>
           Aucun

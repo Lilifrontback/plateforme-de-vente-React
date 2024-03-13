@@ -16,12 +16,22 @@ const meubles = await fetchMeubles().catch((error) =>
   console.error("Error:", error)
 );
 
+
+
 //On met des useState pour écouter quel filtre est sélectionné
 function Home() {
+
   const [selectedCategorieFilter, setSelectedCategorieFilter] = useState(null);
   const [selectedCouleurFilter, setSelectedCouleurFilter] = useState(null);
   const [selectedMatiereFilter, setSelectedMatiereFilter] = useState(null);
+  const [couleurBoutonCategorie , setcouleurBoutonCategorie ] = useState('#254356');
+  const [couleurBoutonCouleur  , setcouleurBoutonCouleur ] = useState('#254356');
+  const [couleurBoutonMatiere , setcouleurBoutonMatiere ] = useState('#254356');
 
+  // //On définit la couleur du bouton filtre pour la faire varier
+  // setcouleurBoutonCategorie = '#254356';
+  // setcouleurBoutonCouleur = '#254356';
+  // setcouleurBoutonMatiere = '#254356';
   //On choisit les listes de filtres. Ces listes doivent correspondre à la BDD
   const filtreParCouleur = [
     "Chêne clair",
@@ -61,6 +71,8 @@ function Home() {
     "Metal",
   ];
 
+
+
   //On place un useState pour écouter la liste de meubles filtrés qui sera mise à jour selon filtres appliqués
   const [filteredMeubles, setFilteredMeubles] = useState(meubles);
 
@@ -80,6 +92,11 @@ function Home() {
         setSelectedMatiereFilter(
           null
         );
+        setcouleurBoutonCategorie('#254356');
+        setcouleurBoutonCouleur(
+          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
+        setcouleurBoutonMatiere(
+          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
         break;
         
       case "couleur":
@@ -92,6 +109,11 @@ function Home() {
         setSelectedMatiereFilter(
           null
         );
+        setcouleurBoutonCouleur('#254356')
+        setcouleurBoutonCategorie(
+          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
+        setcouleurBoutonMatiere(
+          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
         break;
 
       case "matiere":
@@ -104,6 +126,11 @@ function Home() {
         setSelectedCouleurFilter(
           null
         );
+        setcouleurBoutonMatiere('#254356')
+        setcouleurBoutonCategorie(
+          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
+        setcouleurBoutonCouleur(
+          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
         break;
       default:
         break;
@@ -149,6 +176,7 @@ function Home() {
           <Box> </Box>
           <Box>
             <Filtres
+              defaultColor={couleurBoutonCategorie}
               filters={filtreParCategorie}
               onSelectFilter={(filtreChoisi) =>
                 selectionFiltre(filtreChoisi, "categorie")
@@ -159,6 +187,7 @@ function Home() {
           </Box>
           <Box>
             <Filtres
+              defaultColor={couleurBoutonCouleur}
               filters={filtreParCouleur}
               onSelectFilter={(filtreChoisi) =>
                 selectionFiltre(filtreChoisi, "couleur")
@@ -169,6 +198,7 @@ function Home() {
           </Box>
           <Box>
             <Filtres
+              defaultColor={couleurBoutonMatiere}
               filters={filtreParMatiere}
               onSelectFilter={(filtreChoisi) =>
                 selectionFiltre(filtreChoisi, "matiere")
