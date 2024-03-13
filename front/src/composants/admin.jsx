@@ -134,9 +134,6 @@ function Admin() {
         <Th>en stock</Th>
         <Th>acheteur</Th>
         <Th>prix en €</Th>
-        <Th>ajouter</Th>
-        <Th>modifier</Th>
-        <Th>supprimer</Th>
         </Tr>
     </Thead>
     {/* 1ère ligne du tableau avec insertion et menu déroulant pour créer un nouveau meuble dans la BDD */}
@@ -212,8 +209,8 @@ function Admin() {
         onChange={prixChange}/></Td>
         {/* Bouton */}
         <Td><Button colorScheme='teal' variant='ghost' onClick={() =>ajouterMeuble()} > 
-        {/* onClick={handleAddItem} */}
-            ajouter</Button></Td>  
+            ajouter</Button></Td>
+        <Td></Td>
         </Tr>
           {meubles.map((meuble,index) => ( //boucle qui parcourt l'objet
             <Tr key={index}>
@@ -228,7 +225,6 @@ function Admin() {
               <Td>{meuble.acheteur_id}</Td>
               <Td>{meuble.prix}</Td>
              
-              <Td> XXXXX </Td>
               
               <Td> <Button colorScheme='teal' variant='ghost'>modifier</Button></Td>
               <Td> <Button colorScheme='teal' variant='ghost' onClick={() =>supprimerMeuble(meuble.id)}>supprimer</Button></Td>

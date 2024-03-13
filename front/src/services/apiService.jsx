@@ -63,9 +63,8 @@ export function fetchSuppressionMeuble(id){
 }
     
        
-
 export function fetchMeublesFiltres(filtre,valeur) {
-    return fetch(`${apiUrl}meubles/?{filtre}={valeur}`)
+    return fetch(`${apiUrl}searchbar/?${filtre}=${valeur}`)
     .then(response => response.json())
 }
 
