@@ -124,12 +124,10 @@ app.post("/utilisateurs", (req, res) => {
         ],
         (err, result) => {
           console.log("Utilisateur ajouté avec succès.");
-          res
-            .status(201)
-            .json({
-              message: "Utilisateur ajouté avec succès.",
-              motdepasse_id: motdepasseId,
-            });
+          res.status(201).json({
+            message: "Utilisateur ajouté avec succès.",
+            motdepasse_id: motdepasseId,
+          });
         }
       );
     }
@@ -470,12 +468,10 @@ app.post("/utilisateurs", (req, res) => {
         ],
         (err, result) => {
           console.log("Utilisateur ajouté avec succès.");
-          res
-            .status(201)
-            .json({
-              message: "Utilisateur ajouté avec succès.",
-              motdepasse_id: motdepasseId,
-            });
+          res.status(201).json({
+            message: "Utilisateur ajouté avec succès.",
+            motdepasse_id: motdepasseId,
+          });
           res.redirect("/");
         }
       );
@@ -528,31 +524,29 @@ app.get("/panier", (req, res) => {
 //Requête d'envoi dans le panier
 //TODO rajouter ici requête pour envoyer l'article dans la table commande
 // app.post("/ajoutpanier", (req, res) => {
-  //Envoyer au panier et rester sur la page
-  // let meubleid = req.body.meuble_id;
-  // let requete = `INSERT INTO Commandes (paye, session, meuble_id) VALUES (?, ?, ?)`;
+//Envoyer au panier et rester sur la page
+// let meubleid = req.body.meuble_id;
+// let requete = `INSERT INTO Commandes (paye, session, meuble_id) VALUES (?, ?, ?)`;
 
-  app.post("/ajoutpanier", (req, res) => {
-    let ajoutPanier = req.body;
-    console.log(req.body);
-    console.log(ajoutPanier.nom);
-    let addPanier = `INSERT INTO Commandes (meuble_id) VALUES (?)`;
-    database.query(addPanier, [
-      ajoutPanier.meuble_id,
-    ]);
-    res.status(201).json({
-      message: "Objet ajouté !",
-    });
+app.post("/ajoutpanier", (req, res) => {
+  let ajoutPanier = req.body.meuble_id;
+  console.log(req.body);
+  console.log(ajoutPanier.nom);
+  let addPanier = `INSERT INTO Commandes (meuble_id) VALUES (?)`;
+  database.query(addPanier, [ajoutPanier.meuble_id]);
+  res.status(201).json({
+    message: "Objet ajouté !",
   });
-
-  database.query(requete[req.session.panier][meubleid], (err, rows, fields) => {
-    if (err) {
-      console.log("erreur dans la requête", err);
-      res.status(500).send("erreur interne du serveur");
-      return;
-    }
-    console.log("Resultat de la requête:", rows);
-    res.json(rows);
-  });
-  res.redirect("/");
 });
+
+//   database.query(requete[req.session.panier][meubleid], (err, rows, fields) => {
+//     if (err) {
+//       console.log("erreur dans la requête", err);
+//       res.status(500).send("erreur interne du serveur");
+//       return;
+//     }
+//     console.log("Resultat de la requête:", rows);
+//     res.json(rows);
+//   });
+//   res.redirect("/");
+// });
