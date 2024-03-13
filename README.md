@@ -41,22 +41,22 @@ Collaboration between the two teams was essential to ensure the project's succes
 
 # How to install and run the project:
 
-    1. Create your database (on alwaysdata for example!)
-    2. To link your database to the project, create a file named 'connexionDB.json' in the 'back' folder and fill it with your informations, following this model :
+1. Create your database (on alwaysdata for example!)
+2. To link your database to the project, create a file named 'connexionDB.json' in the 'back' folder and fill it with your informations, following this model :
 
     `{
 
-"host": "Tape here the url of your database...",
-"user": "Tape here your user name...",
-"password": "Tape here your password...",
-"database": "Tape here the nam of your DB..."
-}`
+    "host": "Tape here the url of your database...",
+    "user": "Tape here your user name...",
+    "password": "Tape here your password...",
+    "database": "Tape here the nam of your DB..."
+    }`
 
-    3. Go in 'back' folder, open your terminal, and run this command :
+3. Go in 'back' folder, open your terminal, and run this command :
     `npm install`
     `npm start`
 
-    4. Go in 'front' folder, open your terminal and run this command :
+4. Go in 'front' folder, open your terminal and run this command :
     `npm install`
     `npm run dev`
 
