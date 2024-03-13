@@ -11,6 +11,7 @@ import NavBar from './composants/NavBar';
 import Connexion from './composants/Connexion.jsx'
 import Footer from './composants/Footer.jsx'
 import Admin from './Admin.jsx'
+localStorage.removeItem('chakra-ui-color-mode');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

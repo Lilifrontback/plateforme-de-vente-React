@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import SearchBar from "../src/composants/SearchBar.jsx";
 import Filtres from "../src/composants/Filters.jsx";
 import { Link } from "react-router-dom";
-import { Card, CardBody } from "@chakra-ui/react";
+import { Card, CardBody, Center } from "@chakra-ui/react";
 import { Stack, Heading, Text, Image, Button } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid,Box } from "@chakra-ui/react";
 
 //Import données 
 import {fetchMeubles} from "./services/apiService.jsx";
@@ -59,45 +59,56 @@ function Home() {
     console.log(`Filtre sélectionné: ${filtreChoisi}`);
   };
   return (
-    <Stack spacing={8} align="center" mt={8}>
-      <div>
-      <Filtres filters={filtreParCategorie} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "categorie")}  selectedFilter={selectedCategorieFilter}  filterType="categorie"  />
-      <Filtres filters={filtreParCouleur} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "couleur")} selectedFilter={selectedCouleurFilter}  filterType="couleur"/>
-      <Filtres filters={filtreParMatiere} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "matiere")}selectedFilter={selectedMatiereFilter} filterType="matiere" />
-    </div>
-    <SearchBar />
+     <Box backgroundImage="url('../src/assets/images/pattern_flower.png')">
+    <Stack spacing={8} align="center" >
+    <SimpleGrid spacing={10}
+        templateColumns="repeat(3,1fr)"
+        justifyItems="center">
+      <Box> </Box>
+      <Box> </Box>
+      <Box> </Box>
+      <Box><Filtres filters={filtreParCategorie} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "categorie")}  selectedFilter={selectedCategorieFilter}  filterType="categorie"  /></Box>
+      <Box><Filtres filters={filtreParCouleur} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "couleur")} selectedFilter={selectedCouleurFilter}  filterType="couleur"/></Box>
+      <Box><Filtres filters={filtreParMatiere} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "matiere")}selectedFilter={selectedMatiereFilter} filterType="matiere" /></Box>
+    </SimpleGrid>
+    {/* <SearchBar /> */}
       <SimpleGrid
         spacing={4}
         templateColumns="repeat(3,1fr)"
         justifyItems="center"
       >
         {filteredMeubles.map((meuble) => (
-          <Card key={meuble.id} maxW="xs">
+          <Card key={meuble.id} maxW="xs" bg="#254356" >
             <CardBody>
               <Image src={meuble.photo} alt={meuble.nom} borderRadius='lg' boxSize="300px" objectFit="cover" />
               <Stack mt="6" spacing="3">
-                <Link to={`/product/${meuble.id}`}>
-                  <Heading size="md">{meuble.nom}</Heading>
+                <Link to={`/product/${meuble.id}`} >
+                  <Heading size="md" color="white">{meuble.nom}</Heading>
                 </Link>
-                <Text>
+                <Box >
+                <Text color="white" >
                   {meuble.descriptif}
                 </Text>
-                <Text color="blue.600" fontSize="2xl" ml="auto">
-                  {meuble.prix}€
+                </Box>
+                <Text color="white" fontSize="2xl" ml="auto">
+                  {meuble.prix} €
                 </Text>
               </Stack>
             </CardBody>
-            <Divider />
+            <Divider color="white"/>
             <CardBody>
-              <Button variant="solid" colorScheme="blue">
+              <Center>
+              <Button bg='white' color="#254356" variant='solid' _hover={{bg:'#C0C0C0'}}>
                 {/*Appeller le composant Bouton et linkto ajout panier*/}
                 Ajouter au panier
               </Button>
+              </Center>
             </CardBody>
           </Card>
         ))}
       </SimpleGrid>
     </Stack>
+   </Box>
   );
 }
 
