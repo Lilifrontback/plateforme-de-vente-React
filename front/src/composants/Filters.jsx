@@ -3,21 +3,38 @@ import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 
 //Filtres prend deux propriétés en param : liste de filtre, et un callback qd le filtre est sélectionné
-function Filtres ({ filters, onSelectFilter }) {
+function Filtres ({ filters, onSelectFilter, filterType, selectedFilter }) {
 
-//On garde en mémoire avec useSate le filtre sélectionné 
-const [selectedFilter, setSelectedFilter] = useState(null);
+// //On garde en mémoire avec useSate le filtre sélectionné 
+// const [selectedFilter, setSelectedFilter] = useState(null);
 
 //On crée une fonction gérerFiltreChoisi qui appelle onSelectFilter sur le filtre choisi
 function gererFiltreChoisi (fitreChoisi) {
-  setSelectedFilter(fitreChoisi);
   onSelectFilter(fitreChoisi);
 };
+
+// Déterminer la valeur par défaut en fonction du type de filtre (pour MAJ le bouton)
+let defaultLabel = '';
+if (selectedFilter === null || selectedFilter === 'Aucun') {
+  if (filterType === 'categorie') {
+    defaultLabel = 'Filtrer: Catégorie';
+  } else if (filterType === 'couleur') {
+    defaultLabel = 'Filtrer: Couleur';
+  } else if (filterType === 'matiere') {
+    defaultLabel = 'Filtrer: Matière';
+  }
+} else {
+  defaultLabel = selectedFilter;
+}
+
 //On retourne le bouton
   return (
     <Menu>
-      <MenuButton as={Button}>Filtrer: {selectedFilter || 'Choisir le filtre'}</MenuButton>
+      <MenuButton as={Button}> {defaultLabel}</MenuButton>
       <MenuList>
+      <MenuItem key="Aucun" onClick={() => gererFiltreChoisi("Aucun")}>
+          Aucun
+        </MenuItem>
         {/* On va appeller sur le click du filtre, la fonction qui garde en mémoire le filtre choisi */}
         {filters.map((filter) => (
           <MenuItem key={filter} onClick={() => gererFiltreChoisi(filter)}>

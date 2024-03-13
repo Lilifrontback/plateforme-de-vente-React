@@ -10,34 +10,60 @@ import { SimpleGrid } from "@chakra-ui/react";
 //Import données 
 import {fetchMeubles} from "./services/apiService.jsx";
 
-// On export la constante pour la récupérer dans d'autres pages
+// On export la constante pour la récupérer dans d'autres pages @todo : changer ce raisonnement
 export const meubles = await fetchMeubles().catch((error) =>
   console.error("Error:", error)
 );
 
+//On met des useState pour écouter quel filtre est sélectionné
 function Home() {
+  const [selectedCategorieFilter, setSelectedCategorieFilter] = useState(null);
+  const [selectedCouleurFilter, setSelectedCouleurFilter] = useState(null);
+  const [selectedMatiereFilter, setSelectedMatiereFilter] = useState(null);
+
+//On choisit les listes de filtres
   const filtreParCouleur = ['Chêne clair','Vert','bleu nuit', 'Beige', 'Rouge', 'Doré', 'Chêne foncé', 'Gris', 'Acajou', 'Noir']
   const filtreParCategorie = ['Chaise', 'Table', 'Lit', 'Canapé', 'Fauteuil', 'Cathèdre', 'Vaisselier', 'Armoire', 'Dressoir', 'Cabinet', 'Commode'];
   const filtreParMatiere = ['Bois', 'Cuir', 'Velour', 'Verre', 'Plastique', 'Pierre', 'Rotin', 'Tissu'];
 
-//On garde en mémoire
+//On place un useState pour les meubles filtrés qui seront mis à jour selon filtres appliqués
   const [filteredMeubles, setFilteredMeubles] = useState(meubles);
+  
+// Filtrer les meubles en fonction du filtre sélectionné, et d'une propriété 
+//qu'on veut chercher pour la comparer au filtre sélectionné (on appelle le paramètre filtreChoisi)
 
-// Filtrer les meubles en fonction du filtre sélectionné, et d'une propriété qu'on veut chercher pour comparer au filtre (on appelle le paramètre filtreChoisi)
   function selectionFiltre (filtreChoisi,propriete) {
+  //Selon la propriété avec laquelle selectionFiltre est appellée, on va mettre à  jour dans le useState SelectedCategorieFilter 
+    switch (propriete) {
+      case 'categorie':
+        setSelectedCategorieFilter(filtreChoisi);
+        break;
+      case 'couleur':
+        setSelectedCouleurFilter(filtreChoisi);
+        break;
+      case 'matiere':
+        setSelectedMatiereFilter(filtreChoisi);
+        break;
+      default:
+        break;
+    }
+  //On filtre les meubles pour retourner ceux dont la propriété est celle du filtre choisi
+  //Si le filtre choisi est Aucun, on ne va pas les filtrer et ainsi revenir à tous les meubles (défiltrage)
     const meublesFiltrés = meubles.filter(function (meuble) {
-      return meuble[propriete] === filtreChoisi;
+      return meuble[propriete] === filtreChoisi || filtreChoisi === 'Aucun';
   });
+  
   //On change la valeur de FilterMeubles dans le useState
   setFilteredMeubles(meublesFiltrés);
+  setSelectedFilter(filtreChoisi);
     console.log(`Filtre sélectionné: ${filtreChoisi}`);
   };
   return (
     <Stack spacing={8} align="center" mt={8}>
       <div>
-      <Filtres filters={filtreParCategorie} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "categorie")} />
-      <Filtres filters={filtreParCouleur} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "couleur")} />
-      <Filtres filters={filtreParMatiere} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "matiere")} />
+      <Filtres filters={filtreParCategorie} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "categorie")}  selectedFilter={selectedCategorieFilter}  filterType="categorie"  />
+      <Filtres filters={filtreParCouleur} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "couleur")} selectedFilter={selectedCouleurFilter}  filterType="couleur"/>
+      <Filtres filters={filtreParMatiere} onSelectFilter={(filtreChoisi) => selectionFiltre(filtreChoisi, "matiere")}selectedFilter={selectedMatiereFilter} filterType="matiere" />
     </div>
     <SearchBar />
       <SimpleGrid
