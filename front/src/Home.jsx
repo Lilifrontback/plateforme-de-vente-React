@@ -7,60 +7,79 @@ import { Stack, Heading, Text, Image, Button } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 
-//Import données 
+//Import services
 import {fetchMeubles} from "./services/apiService.jsx";
 import { fetchMeublesFiltres } from './services/apiService.jsx';
 
 
-// On crée les constantes meubles et meubles filtrés sur lesquelle itérer
+// On crée la constante meubles sur laquelle itérer. Par défaut (si non filtré) elle correspond au fetch global
 const meubles = await fetchMeubles().catch((error) =>
-  console.error("Error:", error)
+console.error("Error:", error)
 );
 
-const meublesParCouleur = fetchMeublesFiltres()
+
 //On met des useState pour écouter quel filtre est sélectionné
 function Home() {
   const [selectedCategorieFilter, setSelectedCategorieFilter] = useState(null);
   const [selectedCouleurFilter, setSelectedCouleurFilter] = useState(null);
   const [selectedMatiereFilter, setSelectedMatiereFilter] = useState(null);
 
-//On choisit les listes de filtres
+//On choisit les listes de filtres. Ces listes doivent correspondre à la BDD 
   const filtreParCouleur = ['Chêne clair','Vert','bleu nuit', 'Beige', 'Rouge', 'Doré', 'Chêne foncé', 'Gris', 'Acajou', 'Noir']
   const filtreParCategorie = ['Chaise', 'Table', 'Lit', 'Canapé', 'Fauteuil', 'Cathèdre', 'Vaisselier', 'Armoire', 'Dressoir', 'Cabinet', 'Commode'];
   const filtreParMatiere = ['Bois', 'Cuir', 'Velour', 'Verre', 'Plastique', 'Pierre', 'Rotin', 'Tissu'];
 
-//On place un useState pour les meubles filtrés qui seront mis à jour selon filtres appliqués
+//On place un useState pour écouter la liste de meubles filtrés qui sera mise à jour selon filtres appliqués
   const [filteredMeubles, setFilteredMeubles] = useState(meubles);
   
-// Filtrer les meubles en fonction du filtre sélectionné, et d'une propriété 
-//qu'on veut chercher pour la comparer au filtre sélectionné (on appelle le paramètre filtreChoisi)
+//Filtrer les meubles en fonction du filtre sélectionné (ex : chaises), et d'une propriété (ex:categorie)
+//La fonction est appellée dans le template
 
-  function selectionFiltre (filtreChoisi,propriete) {
-  //Selon la propriété avec laquelle selectionFiltre est appellée, on va mettre à  jour dans le useState SelectedCategorieFilter 
+  async function selectionFiltre (filtreChoisi,propriete) {
+
+  //Selon la propriété (categorie, couleur ou matière) avec laquelle selectionFiltre est appellée, on va mettre à  jour dans le useState le filtre sélectionné
     switch (propriete) {
       case 'categorie':
-        setSelectedCategorieFilter(filtreChoisi);
+        setSelectedCategorieFilter(filtreChoisi === 'Aucun' ? null : filtreChoisi);
         break;
       case 'couleur':
-        setSelectedCouleurFilter(filtreChoisi);
+        setSelectedCouleurFilter(filtreChoisi === 'Aucun' ? null : filtreChoisi);
         break;
       case 'matiere':
-        setSelectedMatiereFilter(filtreChoisi);
+        setSelectedMatiereFilter(filtreChoisi === 'Aucun' ? null : filtreChoisi);
         break;
       default:
         break;
     }
-  //On filtre les meubles pour retourner ceux dont la propriété est celle du filtre choisi
-  //Si le filtre choisi est Aucun, on ne va pas les filtrer et ainsi revenir à tous les meubles (défiltrage)
-    const meublesFiltrés = meubles.filter(function (meuble) {
-      return meuble[propriete] === filtreChoisi || filtreChoisi === 'Aucun';
-  });
-  
-  //On change la valeur de FilterMeubles dans le useState
-  setFilteredMeubles(meublesFiltrés);
-  setSelectedFilter(filtreChoisi);
-    console.log(`Filtre sélectionné: ${filtreChoisi}`);
-  };
+      let filterParam;
+      let valueParam = filtreChoisi.toLowerCase()
+
+      if (propriete === 'categorie') filterParam = 'categorie';
+      if (propriete === 'couleur') filterParam = 'couleur';
+      if (propriete === 'matiere') filterParam = 'matiere';
+      console.log("ceci a été retenu comme filtre", filterParam)
+      console.log("ceci a été retenu comme valeur", valueParam)
+      let meublesFiltres
+      if (valueParam === 'aucun'){
+        console.log('La valeur est bien Aucun')
+        meublesFiltres = await fetchMeubles().catch((error) =>
+        console.error("Error:", error)
+        );
+      
+      } else {
+        meublesFiltres = await fetchMeublesFiltres(filterParam,valueParam).catch((error) =>
+        console.error("Error:", error)
+        );
+      }
+      
+  //Selon la valeur prise par meublesFiltres dans la condition, on change la valeur de FilterMeubles  et de SelectedFilter dans le useState
+  setFilteredMeubles(meublesFiltres);
+
+  // setSelectedFilter(filtreChoisi);
+  console.log(`Filtre sélectionné: ${filtreChoisi}`);
+  console.log(`Meubles filtrés: ${meublesFiltres}`)
+  }  
+
   return (
     <Stack spacing={8} align="center" mt={8}>
       <div>
@@ -103,6 +122,7 @@ function Home() {
     </Stack>
   );
 }
+
 
 export default Home;
 
