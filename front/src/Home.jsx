@@ -16,20 +16,21 @@ const meubles = await fetchMeubles().catch((error) =>
   console.error('Error:', error)
 );
 
-//On met des useState pour écouter quel filtre est sélectionné
+//On met des useState pour écouter/modifier quel filtre est sélectionné
 function Home() {
   const [selectedCategorieFilter, setSelectedCategorieFilter] = useState(null);
   const [selectedCouleurFilter, setSelectedCouleurFilter] = useState(null);
   const [selectedMatiereFilter, setSelectedMatiereFilter] = useState(null);
-  const [couleurBoutonCategorie, setcouleurBoutonCategorie] =
-    useState('#254356');
+
+//On met des useState pour écouter/modifier de quelle couleur est chaque bouton
+  const [couleurBoutonCategorie, setcouleurBoutonCategorie] = useState('#254356');
   const [couleurBoutonCouleur, setcouleurBoutonCouleur] = useState('#254356');
   const [couleurBoutonMatiere, setcouleurBoutonMatiere] = useState('#254356');
 
-  // //On définit la couleur du bouton filtre pour la faire varier
-  // setcouleurBoutonCategorie = '#254356';
-  // setcouleurBoutonCouleur = '#254356';
-  // setcouleurBoutonMatiere = '#254356';
+//On place un useState pour écouter la liste de meubles filtrés et la MAJ selon filtres appliqués
+const [filteredMeubles, setFilteredMeubles] = useState(meubles);
+
+
   //On choisit les listes de filtres. Ces listes doivent correspondre à la BDD
   const filtreParCouleur = [
     'Chêne clair',
@@ -69,14 +70,12 @@ function Home() {
     'Metal',
   ];
 
-  //On place un useState pour écouter la liste de meubles filtrés qui sera mise à jour selon filtres appliqués
-  const [filteredMeubles, setFilteredMeubles] = useState(meubles);
-
-  //Filtrer les meubles en fonction du filtre sélectionné (ex : chaises), et d'une propriété (ex:categorie)
-  //La fonction est appellée dans le template
+  //La fonction principale qui est appellée dans le template
 
   async function selectionFiltre(filtreChoisi, propriete) {
-    //Selon la propriété (categorie, couleur ou matière) avec laquelle selectionFiltre est appellée, on va mettre à  jour dans le useState le filtre sélectionné
+    //Selon la propriété (categorie, couleur ou matière) avec laquelle selectionFiltre est appellée
+    //On va mettre à  jour dans le useState le filtre sélectionné
+    //Et on va mettre à jour la couleur du bouton
     switch (propriete) {
       case 'categorie':
         setSelectedCategorieFilter(
@@ -165,6 +164,7 @@ function Home() {
           <Box> </Box>
           <Box> </Box>
           <Box>
+          {/* Les 3 menus de filtres */}
             <Filtres
               defaultColor={couleurBoutonCategorie}
               filters={filtreParCategorie}
