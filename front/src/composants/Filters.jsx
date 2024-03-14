@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 
-//Filtres prend deux propriétés en param : liste de filtre, et un callback qd le filtre est sélectionné
+//Fonction filtres prend deux propriétés en param : liste de filtre, et un callback qd le filtre est sélectionné
 function Filtres ({ defaultColor, filters, onSelectFilter, filterType, selectedFilter }) {
-
 
 
 //On crée une fonction gérerFiltreChoisi qui appelle onSelectFilter sur le filtre choisi
