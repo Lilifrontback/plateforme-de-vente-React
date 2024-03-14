@@ -15,7 +15,7 @@ For us, the major challenge was to learn how to properly communicate through the
 
 ### Backend:
 
-![Architecture back](/front/src/assets/images/archi%20back.png "Trello")
+![Architecture back](/front/src/assets/images/archi%20back.png "Archi back")
 
 - Design and development of the **RESTful API** with **Node.js** and **Express.js**.
 - Integration of a database to store product and user information with **AlwaysData**(which manages data hosting in the cloud, in the form of a **MySQL** database.), and **DBeaver** (which is a downloadable graphical interface that allows you to manage the database, visualizes it, and adds/removes tables.).
@@ -23,7 +23,7 @@ For us, the major challenge was to learn how to properly communicate through the
 
 ### Frontend:
 
-![Architecture front](/front/src/assets/images/Archi%20front.png "Trello")
+![Architecture front](/front/src/assets/images/Archi%20front.png "Archi front")
 
 - Design and development of the user interface with **JavaScript** and **Vite** framework.
 - Use of the **React.js** and **Chakra-UI** libraries to create reusable and dynamic components.
