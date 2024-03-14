@@ -1,32 +1,30 @@
-import React, { useState } from "react";
-import SearchBar from "../src/composants/SearchBar.jsx";
-import Filtres from "../src/composants/Filters.jsx";
-import { Link } from "react-router-dom";
-import { Card, CardBody, Center } from "@chakra-ui/react";
-import { Stack, Heading, Text, Image, Button } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/react";
-import { SimpleGrid, Box } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import SearchBar from '../src/composants/SearchBar.jsx';
+import Filtres from '../src/composants/Filters.jsx';
+import { Link } from 'react-router-dom';
+import { Card, CardBody, Center } from '@chakra-ui/react';
+import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Divider } from '@chakra-ui/react';
+import { SimpleGrid, Box } from '@chakra-ui/react';
 
 //Import services
-import { fetchMeubles } from "./services/apiService.jsx";
-import { fetchMeublesFiltres } from "./services/apiService.jsx";
+import { fetchMeubles } from './services/apiService.jsx';
+import { fetchMeublesFiltres } from './services/apiService.jsx';
 
 // On crée la constante meubles sur laquelle itérer. Par défaut (si non filtré) elle correspond au fetch global
 const meubles = await fetchMeubles().catch((error) =>
-  console.error("Error:", error)
+  console.error('Error:', error)
 );
-
-
 
 //On met des useState pour écouter quel filtre est sélectionné
 function Home() {
-
   const [selectedCategorieFilter, setSelectedCategorieFilter] = useState(null);
   const [selectedCouleurFilter, setSelectedCouleurFilter] = useState(null);
   const [selectedMatiereFilter, setSelectedMatiereFilter] = useState(null);
-  const [couleurBoutonCategorie , setcouleurBoutonCategorie ] = useState('#254356');
-  const [couleurBoutonCouleur  , setcouleurBoutonCouleur ] = useState('#254356');
-  const [couleurBoutonMatiere , setcouleurBoutonMatiere ] = useState('#254356');
+  const [couleurBoutonCategorie, setcouleurBoutonCategorie] =
+    useState('#254356');
+  const [couleurBoutonCouleur, setcouleurBoutonCouleur] = useState('#254356');
+  const [couleurBoutonMatiere, setcouleurBoutonMatiere] = useState('#254356');
 
   // //On définit la couleur du bouton filtre pour la faire varier
   // setcouleurBoutonCategorie = '#254356';
@@ -34,44 +32,42 @@ function Home() {
   // setcouleurBoutonMatiere = '#254356';
   //On choisit les listes de filtres. Ces listes doivent correspondre à la BDD
   const filtreParCouleur = [
-    "Chêne clair",
-    "Vert",
-    "Bleu nuit",
-    "Beige",
-    "Rouge",
-    "Doré",
-    "Chêne foncé",
-    "Gris",
-    "Acajou",
-    "Noir",
+    'Chêne clair',
+    'Vert',
+    'Bleu nuit',
+    'Beige',
+    'Rouge',
+    'Doré',
+    'Chêne foncé',
+    'Gris',
+    'Acajou',
+    'Noir',
   ];
   const filtreParCategorie = [
-    "Chaise",
-    "Table",
-    "Lit",
-    "Canapé",
-    "Fauteuil",
-    "Cathèdre",
-    "Vaisselier",
-    "Armoire",
-    "Dressoir",
-    "Cabinet",
-    "Commode",
-    "Banc",
+    'Chaise',
+    'Table',
+    'Lit',
+    'Canapé',
+    'Fauteuil',
+    'Cathèdre',
+    'Vaisselier',
+    'Armoire',
+    'Dressoir',
+    'Cabinet',
+    'Commode',
+    'Banc',
   ];
   const filtreParMatiere = [
-    "Bois",
-    "Cuir",
-    "Velours",
-    "Verre",
-    "Plastique",
-    "Pierre",
-    "Rotin",
-    "Tissu",
-    "Metal",
+    'Bois',
+    'Cuir',
+    'Velours',
+    'Verre',
+    'Plastique',
+    'Pierre',
+    'Rotin',
+    'Tissu',
+    'Metal',
   ];
-
-
 
   //On place un useState pour écouter la liste de meubles filtrés qui sera mise à jour selon filtres appliqués
   const [filteredMeubles, setFilteredMeubles] = useState(meubles);
@@ -82,55 +78,49 @@ function Home() {
   async function selectionFiltre(filtreChoisi, propriete) {
     //Selon la propriété (categorie, couleur ou matière) avec laquelle selectionFiltre est appellée, on va mettre à  jour dans le useState le filtre sélectionné
     switch (propriete) {
-      case "categorie":
+      case 'categorie':
         setSelectedCategorieFilter(
-          filtreChoisi === "Aucun" ? null : filtreChoisi
+          filtreChoisi === 'Aucun' ? null : filtreChoisi
         );
-        setSelectedCouleurFilter(
-          null
-        );
-        setSelectedMatiereFilter(
-          null
-        );
+        setSelectedCouleurFilter(null);
+        setSelectedMatiereFilter(null);
         setcouleurBoutonCategorie('#254356');
         setcouleurBoutonCouleur(
-          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
+          filtreChoisi === 'Aucun' ? '#254356' : '#bdccde'
+        );
         setcouleurBoutonMatiere(
-          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
-        break;
-        
-      case "couleur":
-        setSelectedCouleurFilter(
-          filtreChoisi === "Aucun" ? null : filtreChoisi
+          filtreChoisi === 'Aucun' ? '#254356' : '#bdccde'
         );
-        setSelectedCategorieFilter(
-          null
-        );
-        setSelectedMatiereFilter(
-          null
-        );
-        setcouleurBoutonCouleur('#254356')
-        setcouleurBoutonCategorie(
-          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
-        setcouleurBoutonMatiere(
-          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
         break;
 
-      case "matiere":
-        setSelectedMatiereFilter(
-          filtreChoisi === "Aucun" ? null : filtreChoisi
-        );
-        setSelectedCategorieFilter(
-          null
-        );
+      case 'couleur':
         setSelectedCouleurFilter(
-          null
+          filtreChoisi === 'Aucun' ? null : filtreChoisi
         );
-        setcouleurBoutonMatiere('#254356')
+        setSelectedCategorieFilter(null);
+        setSelectedMatiereFilter(null);
+        setcouleurBoutonCouleur('#254356');
         setcouleurBoutonCategorie(
-          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
+          filtreChoisi === 'Aucun' ? '#254356' : '#bdccde'
+        );
+        setcouleurBoutonMatiere(
+          filtreChoisi === 'Aucun' ? '#254356' : '#bdccde'
+        );
+        break;
+
+      case 'matiere':
+        setSelectedMatiereFilter(
+          filtreChoisi === 'Aucun' ? null : filtreChoisi
+        );
+        setSelectedCategorieFilter(null);
+        setSelectedCouleurFilter(null);
+        setcouleurBoutonMatiere('#254356');
+        setcouleurBoutonCategorie(
+          filtreChoisi === 'Aucun' ? '#254356' : '#bdccde'
+        );
         setcouleurBoutonCouleur(
-          filtreChoisi === "Aucun" ? '#254356' :'#bdccde');
+          filtreChoisi === 'Aucun' ? '#254356' : '#bdccde'
+        );
         break;
       default:
         break;
@@ -138,20 +128,20 @@ function Home() {
     let filterParam;
     let valueParam = filtreChoisi.toLowerCase();
 
-    if (propriete === "categorie") filterParam = "categorie";
-    if (propriete === "couleur") filterParam = "couleur";
-    if (propriete === "matiere") filterParam = "matiere";
-    console.log("ceci a été retenu comme filtre", filterParam);
-    console.log("ceci a été retenu comme valeur", valueParam);
+    if (propriete === 'categorie') filterParam = 'categorie';
+    if (propriete === 'couleur') filterParam = 'couleur';
+    if (propriete === 'matiere') filterParam = 'matiere';
+    console.log('ceci a été retenu comme filtre', filterParam);
+    console.log('ceci a été retenu comme valeur', valueParam);
     let meublesFiltres;
-    if (valueParam === "aucun") {
-      console.log("La valeur est bien Aucun");
+    if (valueParam === 'aucun') {
+      console.log('La valeur est bien Aucun');
       meublesFiltres = await fetchMeubles().catch((error) =>
-        console.error("Error:", error)
+        console.error('Error:', error)
       );
     } else {
       meublesFiltres = await fetchMeublesFiltres(filterParam, valueParam).catch(
-        (error) => console.error("Error:", error)
+        (error) => console.error('Error:', error)
       );
     }
 
@@ -165,11 +155,11 @@ function Home() {
 
   return (
     <Box backgroundImage="url('../src/assets/images/pattern_flower.png')">
-      <Stack spacing={8} align="center">
+      <Stack spacing={8} align='center'>
         <SimpleGrid
           spacing={10}
-          templateColumns="repeat(3,1fr)"
-          justifyItems="center"
+          templateColumns='repeat(3,1fr)'
+          justifyItems='center'
         >
           <Box> </Box>
           <Box> </Box>
@@ -179,10 +169,10 @@ function Home() {
               defaultColor={couleurBoutonCategorie}
               filters={filtreParCategorie}
               onSelectFilter={(filtreChoisi) =>
-                selectionFiltre(filtreChoisi, "categorie")
+                selectionFiltre(filtreChoisi, 'categorie')
               }
               selectedFilter={selectedCategorieFilter}
-              filterType="categorie"
+              filterType='categorie'
             />
           </Box>
           <Box>
@@ -190,10 +180,10 @@ function Home() {
               defaultColor={couleurBoutonCouleur}
               filters={filtreParCouleur}
               onSelectFilter={(filtreChoisi) =>
-                selectionFiltre(filtreChoisi, "couleur")
+                selectionFiltre(filtreChoisi, 'couleur')
               }
               selectedFilter={selectedCouleurFilter}
-              filterType="couleur"
+              filterType='couleur'
             />
           </Box>
           <Box>
@@ -201,51 +191,53 @@ function Home() {
               defaultColor={couleurBoutonMatiere}
               filters={filtreParMatiere}
               onSelectFilter={(filtreChoisi) =>
-                selectionFiltre(filtreChoisi, "matiere")
+                selectionFiltre(filtreChoisi, 'matiere')
               }
               selectedFilter={selectedMatiereFilter}
-              filterType="matiere"
+              filterType='matiere'
             />
           </Box>
         </SimpleGrid>
         {/* <SearchBar /> */}
         <SimpleGrid
           spacing={4}
-          templateColumns="repeat(3,1fr)"
-          justifyItems="center"
+          templateColumns='repeat(3,1fr)'
+          justifyItems='center'
         >
           {filteredMeubles.map((meuble) => (
-            <Card key={meuble.id} maxW="xs" bg="#254356">
+            <Card key={meuble.id} maxW='xs' bg='#254356'>
               <CardBody>
                 <Image
                   src={meuble.photo}
                   alt={meuble.nom}
-                  borderRadius="lg"
-                  boxSize="300px"
-                  objectFit="cover"
+                  borderRadius='lg'
+                  boxSize='300px'
+                  objectFit='cover'
                 />
-                <Stack mt="6" spacing="3">
+                <Stack mt='6' spacing='3'>
                   <Link to={`/product/${meuble.id}`}>
-                    <Heading size="md" color="white">
+                    <Heading size='md' color='white'>
                       {meuble.nom}
                     </Heading>
                   </Link>
                   <Box>
-                    <Text color="white">{meuble.descriptif}</Text>
+                    <Text color='white'>{meuble.descriptif}</Text>
                   </Box>
-                  <Text color="white" fontSize="2xl" ml="auto">
+                  <Text color='white' fontSize='2xl' ml='auto'>
                     {meuble.prix} €
                   </Text>
                 </Stack>
               </CardBody>
-              <Divider color="white" />
+              {/* <Divider color='white' /> */}
               <CardBody>
                 <Center>
                   <Button
-                    bg="white"
-                    color="#254356"
-                    variant="solid"
-                    _hover={{ bg: "#C0C0C0" }}
+                    bg='white'
+                    color='#254356'
+                    variant='solid'
+                    _hover={{ bg: '#C0C0C0' }}
+                    bottom='2'
+                    position='absolute'
                   >
                     {/*Appeller le composant Bouton et linkto ajout panier*/}
                     Ajouter au panier
