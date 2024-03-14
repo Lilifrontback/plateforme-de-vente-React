@@ -77,7 +77,7 @@ app.post("/admin",(req,res) => {
     (
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? 
     )`; // Les ? seront remplacés par les valeurs à ajouter Attention à bien mettre les variables à ajouter dans le même ordre que la liste ci-dessus
-    //envoie de la requête
+    //envoi de la requête
      database.query(addMeubles,[meubleAjoute[0].nom,meubleAjoute[1].categorie_id,meubleAjoute[2].descriptif,meubleAjoute[3].prix,meubleAjoute[8].dimension, meubleAjoute[9].vendeur_id,meubleAjoute[10].acheteur_id,meubleAjoute[4].matiere_id,meubleAjoute[5].photo,meubleAjoute[6].couleur_id,meubleAjoute[7].stock])
      res.status(201).json({
      message: 'Objet créé !' 
@@ -206,7 +206,6 @@ app.get("/admin/categorie", function (req, res) {
 //Route get pour récupérer les meubles de la BDD
 //Des paramètres peuvent être passés dans l'url de la requête coté front pour filtrer les meubles par couleur, catégorie, matière
 //TODO, modifier cette route pour lui permettre de prendre en compte plusieurs filtres en meme temps (ex: je veux des chaises rouges en velours)
-//TODO, une fois le cumul de filtres possible, ajouter notamment le filtre stock = 1 
 
 app.get("/searchbar", function (req, res) { //suppression /meuble pas de page meuble >> Lise
 
@@ -322,7 +321,6 @@ app.get("/searchbar", function (req, res) { //suppression /meuble pas de page me
 
 
 // Route get récupérer meubles where en stock = true. 
-//TODO: Sera à fusionner avec la route GET globale une fois qu'elle pourra cumuler plusieurs paramètres
 app.get("/meublesenstock", function (req, res) {
   //database.query("SELECT * FROM Meubles WHERE stock = 1", (err, rows, fields) => {
     database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock,Meubles.dimension, Meubles.acheteur_id,  Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id",
@@ -338,7 +336,7 @@ app.get("/meublesenstock", function (req, res) {
 });
 
 
-//Route get by id where en stock = true
+//Route get by id where en stock = 0 ou 1
 app.get("/meublesenstock/:id",  (req, res) => {
   const id = parseInt(req.params.id)
   console.log("ID Récupéré: ",id)
@@ -354,14 +352,8 @@ app.get("/meublesenstock/:id",  (req, res) => {
   });
 })
 
-// TODO ROUTES
-//Voir la route GET /meubles à améliorer
-//Route POST commande pour ajout nouvel article au panier (qui ajoute une ligne à la table commande en BDD)
-//Route GET commande (pour affichage panier)
-//Et plus si affinités!!
-
 app.get("/meubles", function (req, res) {
-  database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id", (err, rows, fields) => {
+  database.query("SELECT Meubles.id, Meubles.nom, Meubles.descriptif, Meubles.photo, Meubles.prix, Meubles.stock, Meubles.dimension, Couleurs.nom AS couleur, Categories.nom AS categorie, Matieres.nom AS matiere FROM Meubles INNER JOIN Couleurs ON Meubles.couleur_id = Couleurs.id INNER JOIN Categories ON Meubles.categorie_id = Categories.id INNER JOIN Matieres ON Meubles.matiere_id = Matieres.id", (err, rows, fields) => {
     if (err) {
       console.log("erreur dans la requête", err);
       res.status(500).send("erreur interne du serveur");
@@ -375,7 +367,7 @@ app.get("/meubles", function (req, res) {
 
 //SESSIONS : 
 
-///////route pour Ajouter un utilisateur et mot de passenpm start
+///////route pour Ajouter un utilisateur et mot de passe
 
 
 app.post("/utilisateurs", (req, res) => {
@@ -437,7 +429,7 @@ app.use((req, res, next) => {
 app.use(express.static('public'));
 
 //Trame de la requête panier qui récupère la session
-//TODO rajouter requête de récupéréation des lignes dans la table commande qui correspondent à la session/utilisateur
+//TODO rajouter requête de récupération des lignes dans la table commande qui correspondent à la session/utilisateur
 app.get('/panier', (req, res) => {
   //Récupération de la réponse de la requête en json, avec chemin vers panier
   res.json(req.session.panier);

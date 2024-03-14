@@ -8,8 +8,8 @@ function Connexion() {
   const [password, setPassword] = useState("");
 
   return (
-    <Box display="flex" justifyContent="center" mt={8}>
-      <Box maxW="md" p={8} borderWidth={1} borderRadius="lg">
+    <Box backgroundImage="url('../src/assets/images/pattern_flower.png')" display="flex" justifyContent="center">
+      <Box maxW="md" p={8} borderWidth={1} borderRadius="lg" bg='white' variant = 'solid' mt={8} mb={8}>
         <Heading as="h2" size="lg" mb={4}>Connexion</Heading>
         <Box as="form" className="login-form">
           <label>Se connecter</label>
@@ -31,7 +31,7 @@ function Connexion() {
             mb={4}
           />
           {/* Bouton pour soumettre le formulaire */}
-          <Button colorScheme="blue" onClick={() => console.log("Login:", login, "Password:", password)}>
+          <Button bg='#254356' color="white" variant='solid' _hover={{bg:'#355B74'}} size='md' onClick={() => console.log("Login:", login, "Password:", password)}>
             Se connecter
           </Button>
         </Box>

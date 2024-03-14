@@ -14,7 +14,7 @@ function NavBar() {
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Box>
           <Flex alignItems="center">
-            <Image src="../src/assets/images/logo.png" alt="Logo" h={10} mr={6} />
+            <Image src="../src/assets/images/logoRond.png" alt="Logo" h={10} mr={6} />
             <Link to="/">
               <Button color="white" variant="outline" _hover={{bg:'#355B74'}} mr={4}>
                 Accueil
@@ -26,10 +26,11 @@ function NavBar() {
               </Button>
             </Link>
             <Link to="/inscription">
-              <Button color="white" variant="outline" _hover={{bg:'#355B74'}}>
+              <Button color="white" variant="outline" _hover={{bg:'#355B74'}} mr={4}>
                 Inscription
               </Button>
             </Link>
+            <Image src="../src/assets/images/titreSite.png" alt="Titre" h={20} mt={3} position={'absolute'} ml={'38%' } />
           </Flex>
         </Box>
         <Spacer />
