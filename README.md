@@ -1,4 +1,4 @@
-# Project - "Les Chaises Musicales" ![Logo du site](/front/src/assets/images/logo.png "Logo"| width=100)
+# Project - "Les Chaises Musicales" ![Logo du site](/front/src/assets/images/logo.png "Logo" |  =250x250)
 
 "Les Chaises Musicales" is a website for selling second-hand furniture, and even antiques, developed as part of a school collective project at **_Ada Tech School_**.
 
