@@ -375,7 +375,7 @@ app.get("/meubles", function (req, res) {
 
 //SESSIONS : 
 
-///////route pour Ajouter un utilisateur et mot de passenpm start
+///////route pour Ajouter un utilisateur et mot de passe
 
 
 app.post("/utilisateurs", (req, res) => {
